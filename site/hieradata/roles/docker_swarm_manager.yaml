@@ -1,0 +1,15 @@
+classes:
+  - roles::docker_swarm_manager
+
+consul::services:
+  'docker_swarm_manager':
+    port: 2375
+    tags:
+      - docker_swarm_manager
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:2375"
+       interval: '10s'
+       timeout: '1s'

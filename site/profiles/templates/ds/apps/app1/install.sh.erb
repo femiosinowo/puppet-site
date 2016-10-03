@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#sudo sh bash
+cd /home/ec2-user/app/
+
+eval $(docker-machine env --swarm swarm-master-devOps)
+
+#lets delete running containers first
+docker-compose kill && docker-compose rm -f
+
+#build the images in different nodes
+docker $(docker-machine config swarm-node00-devOps) build -t app_myapp .
+docker $(docker-machine config swarm-node01-devOps) build -t app_myapp .
+
+#switch back to docker swarm to run containers on swarm
+eval $(docker-machine env --swarm swarm-master-devOps)
+
+#creating 5 containers here
+docker-compose scale myapp=10

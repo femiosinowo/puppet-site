@@ -1,0 +1,120 @@
+classes:
+ - profiles::base
+ - profiles::logs::filebeat
+# - ssl
+ #- sensu
+ #- profiles::monitor::sensu_plugins
+
+
+infrastructure::ec2::consul::ip: '172.17.8.102'
+infrastructure::ec2::elkstack::ip: '172.17.8.103'
+infrastructure::ec2::rabbitmq::ip: '172.17.8.104'
+infrastructure::ec2::sensu::ip: '172.17.8.105'
+infrastructure::ec2::activemq::ip: '172.17.8.106'
+ 
+ 
+    
+sensu::server_ip: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::server: false
+sensu::install_repo: true
+sensu::purge:
+  config: true
+sensu::rabbitmq_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::rabbitmq_vhost: '/sensu'
+sensu::rabbitmq_password: sensu
+sensu::rabbitmq_port: 5672
+sensu::reconnect_on_error: true
+sensu::api: false
+sensu::api_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+ 
+sensu::api_user: sensu
+sensu::api_password: sensu
+sensu::api_port: 4567
+sensu::client_address: "%{::ipaddress_eth1}"
+sensu::redis_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::subscriptions:
+  - base
+  - ALL
+
+
+sensu::checks:
+  'check-consul-failures':
+    command: '/opt/sensu/embedded/bin/check-consul-failures.rb'
+    subscribers: 'all'
+  'check-service-consul':
+    command: '/opt/sensu/embedded/bin/check-service-consul.rb'
+    subscribers: 'all'
+  'check-consul-members':
+    command: '/opt/sensu/embedded/bin/check-consul-members.rb'
+    subscribers: 'all'    
+  'check-consul-failures':
+    command: '/opt/sensu/embedded/bin/check-consul-failures.rb'
+    subscribers: 'all'
+  'checkpuppet-last-run':
+    command: '/opt/sensu/embedded/bin/checkpuppet-last-run.rb -s /var/lib/puppet/state/last_run_summary.yaml'
+    subscribers: 'all'
+  'metrics-puppet-run':
+    command: '/opt/sensu/embedded/bin/metrics-puppet-run.rb -p /var/lib/puppet/state/last_run_summary.yaml'
+    subscribers: 'all' 
+  'check-logstash':
+    command: '/opt/sensu/embedded/bin/handler-logstash'
+    subscribers: 'elk'
+  'check-es-node-status':
+    command: '/opt/sensu/embedded/bin/check-es-node-status.rb'
+    subscribers: 'elk'
+  'check-es-cluster-health':
+    command: '/opt/sensu/embedded/bin/check-es-cluster-health.rb'
+    subscribers: 'elk'    
+  'metrics-es-cluster':
+    command: '/opt/sensu/embedded/bin/metrics-es-cluster.rb'
+    subscribers: 'elk'
+  'check-uchiwa-health':
+    command: '/opt/sensu/embedded/bin/check-uchiwa-health.rb'
+    subscribers: 'elk'
+  'check-haproxy':
+    command: '/opt/sensu/embedded/bin/check-haproxy.rb -S localhost'
+    subscribers: 'elk'
+     
+#certs details
+private_key: "/apps/ssl/key.pem"
+csr_server_cerets: "/apps/ssl/server.csr"
+server_certs: "/apps/ssl/server_certs.pem"
+#root cas
+root_ca: "/apps/ssl/cacerts/ca.cert.pem"
+root_private_key: "/apps/ssl/cacerts/ca.key.pem"
+intermediate_ca: "/apps/ssl/cacerts/intermediate.cert.pem"
+intermediate_private_key: "/apps/ssl/cacerts/intermediate.key.pem"
+ca_bundle: "/apps/ssl/cacerts/ca_bundle.pem"
+    
+mcollective::client_password: P@ssw0rdP@ssw0rd
+mcollective::server_password: P@ssw0rdP@ssw0rd
+mcollective::psk_key: f525ae7c92fca724b06ed6701cf99ca255e992f9a057084ddbfb75c73dc9c4d9
+mcollective::hosts:
+- activemq.paosin.local
+
+
+consul::config_hash:
+  datacenter: 'paosin-md'
+  domain: 'consul'
+  node_name: "%{::hostname}"
+  bind_addr: "%{::ipaddress_eth1}"
+  advertise_addr: "%{::ipaddress_eth1}"
+  #encrypt: "uGTzSDyGIbQflYFtKNJNWQ=="
+  ca_file: "/apps/ssl/cacerts/intermediate.cert.pem"
+  cert_file: "/apps/ssl/server_certs.pem"
+  key_file: "/apps/ssl/key.pem"
+  verify_incoming: false
+  verify_outgoing: false
+  ports:
+    https: 8543
+  #recursor: '10.0.0.2' 
+  data_dir: '/opt/consul'
+  retry_join: 
+    - "%{hiera('infrastructure::ec2::consul::ip')}"
+
+elkstack::ip: "%{hiera('infrastructure::ec2::elkstack::ip')}"
+elkstack::filebeat::ip::port: "%{hiera('infrastructure::ec2::elkstack::ip')}:5044"
+
+consul::server::ip: "%{hiera('infrastructure::ec2::consul::ip')}"
+consul::server::port: 8500
+ 

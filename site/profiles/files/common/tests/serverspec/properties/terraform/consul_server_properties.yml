@@ -1,0 +1,14 @@
+consul_server: # unique test id
+  :packages: # packages installed by role
+    - 'wget'
+    - 'consul'
+  :ports: # ports opened by role
+    - 8500
+  :closed_ports: # ports closed by role
+  :services: # services initiated by role
+  :processes: # processes initiated by role
+  :files: # files created by role
+    - '/etc/consul/config.json'
+  :directories: # directories created by role
+    - '/etc/consul'
+    - '/openam'

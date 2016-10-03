@@ -1,0 +1,44 @@
+require 'rake'
+require 'rspec/core/rake_task'
+require 'yaml'
+require 'pp'
+
+properties = YAML.load_file('properties.yml')
+
+desc "Run serverspec to all hosts"
+task :spec => 'serverspec:all'
+task :default => :serverspec
+
+namespace :serverspec do
+ task :all => properties.keys.map {|key| 'serverspec:' + key }
+  properties.keys.each do |key|
+    desc "Run serverspec to #{key}"
+    RSpec::Core::RakeTask.new(key.to_sym) do |t|
+     ENV['KEY'] = "#{key}"
+     pp 'Server:- ' + key
+      if properties[key][:packages].to_a.any?
+      ENV['PACKAGES'] = properties[key][:packages].join(',')
+      end
+      if properties[key][:ports].to_a.any?
+      ENV['PORTS'] = properties[key][:ports].join(',')
+      end
+      if properties[key][:closed_ports].to_a.any?
+      ENV['CLOSED_PORTS'] = properties[key][:closed_ports].join(',')
+      end
+      if properties[key][:files].to_a.any?
+      ENV['FILES'] = properties[key][:files].join(',')
+      end
+      if properties[key][:services].to_a.any?
+      ENV['SERVICES'] = properties[key][:services].join(',')
+      end
+      if properties[key][:processes].to_a.any?
+      ENV['PROCESSES'] = properties[key][:processes].join(',')
+      end
+      if properties[key][:directories].to_a.any?
+      ENV['DIRECTORIES'] = properties[key][:directories].join(',')
+      end
+
+      t.pattern = '<%= @server_role %>/*_spec.rb'
+   end
+  end
+end

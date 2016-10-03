@@ -1,0 +1,27 @@
+classes:
+  - roles::docker_swarm_node
+
+sensu::checks:
+  'check-container':
+    command: "/opt/sensu/embedded/bin/check-container.rb -h %{::ipaddress_eth0}:2375 -c app1_myapp_1"
+  'metrics-docker-container':
+    command: '/opt/sensu/embedded/bin/metrics-docker-container.rb'
+  'metrics-docker':
+    command: '/opt/sensu/embedded/bin/metrics-docker-stats.rb'    
+  'check-haproxy':
+    command: '/opt/sensu/embedded/bin/check-haproxy.rb'    
+  'checkpuppet-last-run':
+    command: '/opt/sensu/embedded/bin/checkpuppet-last-run.rb'    
+       
+consul::services:
+  'docker_swarm_node':
+    port: 2375
+    tags:
+      - docker_swarm_manager
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:2375"
+       interval: '10s' 
+       timeout: '1s'

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+server=http://10.0.0.101/artifactory
+#repo=dhs-flash-snapshot-local
+
+# Maven artifact location
+#company=gov/dhs/flash/flashService
+#name=dhs-flash-snapshot-local
+#artifact=0.0.1-SNAPSHOT
+#path=$server/$repo/$company/$name/$artifact
+
+#path=$server/artifactory/dhs-flash-snapshot-local/gov/dhs/flash/flashService/0.0.1-SNAPSHOT
+
+
+#ersion="$(xml2 < curl -s $path/maven-metadata.xml | grep /metadata/versioning/snapshotVersions/snapshotVersion/value | cut -d"=" -f2 | head -n1)"
+
+mavenxmlpath=http://10.0.0.101/artifactory/dhs-flash-snapshot-local/gov/dhs/flash/flashService/0.0.1-SNAPSHOT/maven-metadata.xml
+
+jarpath=http://10.0.0.101/artifactory/dhs-flash-snapshot-local/gov/dhs/flash/flashService/0.0.1-SNAPSHOT/flashService
+
+build=`curl -s $mavenxmlpath | grep '<value>' | head -1 | sed "s/.*<value>\([^<]*\)<\/value>.*/\1/"`
+
+url=$jarpath-$build.jar
+
+# Download
+
+wget -O /root/app1/app.jar -q -N $url
+rm -rf /root/app1/govcio-hackathon
+cd /root/app1
+git clone git@bitbucket.org:lookthink/govcio-hackathon.git
+cp -r /root/app1/govcio-hackathon/public/* /var/www/html

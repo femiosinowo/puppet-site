@@ -1,0 +1,12 @@
+consul::services:
+  'ActiveMQ':
+    port: 61614
+    tags:
+      - ActiveMQServer
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:61614"
+       interval: '10s'
+       timeout: '1s'

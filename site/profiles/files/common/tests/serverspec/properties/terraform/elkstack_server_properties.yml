@@ -1,0 +1,53 @@
+logging_server: # unique test id
+  :packages: # packages installed by role
+    - 'elasticsearch'
+    - 'sensu'
+    - 'dnsmasq'
+    - 'consul'
+    - 'kibana'
+    - 'logstash'
+  :ports: # ports opened by role
+    - 5044
+    - 9200
+    - 8500
+    - 5601
+  :closed_ports: # ports closed by role
+  :services: # services initiated by role
+  :processes: # processes initiated by role
+  :files: # files created by role
+    - '/var/run/kibana.pid'
+    - '/etc/init.d/kibana'
+    - '/etc/init.d/logstash'
+    - '/etc/default/sensu'
+    - '/etc/sensu/conf.d/rabbitmq.json'
+    - '/etc/sensu/conf.d/client.json'
+  :directories: # directories created by role
+    - '/etc/elasticsearch'
+    - '/var/log/elasticsearch'
+    - '/opt/kibana'
+    - '/etc/logstash'
+    - '/opt/logstash'
+    - '/etc/sensu/'
+    - '/etc/sensu/plugins'
+    - '/etc/sensu/conf.d'
+    - '/etc/sensu/conf.d/handlers'
+    - '/etc/sensu/conf.d/checks'
+    - '/etc/sensu/conf.d/filters'
+    - '/etc/sensu/conf.d/extensions'
+    - '/etc/sensu/handlers'
+    - '/etc/sensu/extensions'
+    - '/etc/sensu/mutators'
+    - '/etc/sensu/extensions/handlers'
+
+  :dependencies:
+    - 'jfryman-selinux'
+    - 'puppetlabs-firewall'
+    - 'puppetlabs-java'
+    - 'elasticsearch-elasticsearch'
+    - 'lesaux-kibana4'
+    - 'maestrodev-wget'
+    - 'elasticsearch-logstash'
+    - 'sensu-sensu'
+    - 'KyleAnderson-consul'
+    - 'lex-dnsmasq'
+    - 'saz-resolv_conf'

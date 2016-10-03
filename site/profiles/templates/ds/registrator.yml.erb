@@ -1,0 +1,6 @@
+registrator:
+  image: gliderlabs/registrator
+  net: "host"
+  volumes: 
+   - "/var/run/docker.sock:/tmp/docker.sock"
+  command: consul://localhost:8500 

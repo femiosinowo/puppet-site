@@ -1,0 +1,2 @@
+V	210412023503Z		01	unknown	/CN=sensu/O=server
+V	210412023503Z		02	unknown	/CN=sensu/O=client

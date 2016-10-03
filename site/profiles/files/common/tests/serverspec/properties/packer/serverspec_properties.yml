@@ -1,0 +1,15 @@
+serverspec: # unique test id
+  :packages: # packages installed by role
+  :ports: # ports opened by role
+  :closed_ports: # ports closed by role
+  :services: # services initiated by role
+  :processes: # processes initiated by role
+  :files: # files created by role
+  - '/tmp/properties.yml'
+  - '/usr/local/serverspec/Rakefile'
+  - '/usr/local/serverspec/.rspec'
+  - '/usr/local/serverspec/spec/spec_helper.rb'
+  - '/usr/local/serverspec/properties.yml'
+  - '/usr/local/serverspec/send_report.sh'
+  - '/usr/local/serverspec/terraform_serverspec.sh'
+  :directories: # directories created by role

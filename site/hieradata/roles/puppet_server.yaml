@@ -1,0 +1,259 @@
+classes:
+  - epel
+  - roles::puppetmaster
+  - infrastructure::route53::dnsrecord
+
+ 
+
+consul::server: false
+consul::services:
+  'consul_server':
+    port: 8140
+    tags:
+      - consul_server
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:8140"
+       interval: '10s'
+       timeout: '1s'
+
+
+infrastructure::ec2::image_id: 'ami-204c544a'
+infrastructure::ec2::region: 'us-east-1'
+infrastructure::ec2::subnet: 'DevOps-Public-Subnet'
+infrastructure::ec2::key_name:  'DevOps-Keys'
+infrastructure::ec2::availability_zone:  'us-east-1d'
+infrastructure::ec2::instance_type: 't2.micro'
+infrastructure::ec2::vpc: 'DevOps-GCIO-VPC'
+infrastructure::ec2::iam_instance_profile_name: 'ec2Tags'
+infrastructure::ec2::iam_instance_profile_arn: 'ec2Tags'
+
+infrastructure::ec2::server:
+   'tomcat_server':
+      ip: "%{hiera('infrastructure::ec2::tomcat::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::tomcat::ensure')}"
+      hostname: 'tomcat1.gcio.cloud'
+      instance_type: 't2.micro'
+      server_role: 'tomcat_server'
+      security_group_name: tomcat_server
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            cidr: '10.0.0.0/24'
+            from_port: 30000
+            to_port: 40000
+   'dhs_app1':
+      ip: "%{hiera('infrastructure::ec2::dhs_app1::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::dhs_app1::ensure')}"
+      hostname: 'dhs_app1.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'dhs_app1'
+      security_group_name: dhs_app1
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            port: 8080
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            port: 80
+            cidr: '0.0.0.0/0'
+   'docker_swarm_manager1':
+      ip: "%{hiera('infrastructure::ec2::docker_swarm_manager1::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::docker_swarm_manager1::ensure')}"
+      hostname: 'docker_swarm_manager1.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'docker_swarm_manager'
+      security_group_name: sg_docker_swarm_manager
+      security_group_description: 'docker_swarm_manager Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            cidr: '10.0.0.0/24'
+            from_port: 30000
+            to_port: 40000        
+          - protocol: tcp
+            port: 2375
+            cidr: '0.0.0.0/0'     
+          - protocol: tcp
+            port: 3000
+            cidr: '0.0.0.0/0' 
+   'docker_swarm_node1':
+      ip: "%{hiera('infrastructure::ec2::docker_swarm_node1::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::docker_swarm_node1::ensure')}"
+      hostname: 'docker_swarm_node1.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'docker_swarm_node'
+      security_group_name: sg_docker_swarm_node1
+      security_group_description: 'docker_swarm_node Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            cidr: '10.0.0.0/24'
+            from_port: 30000
+            to_port: 40000        
+          - protocol: tcp
+            port: 2375
+            cidr: '0.0.0.0/0'
+   'docker_swarm_node2':
+      ip: "%{hiera('infrastructure::ec2::docker_swarm_node2::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::docker_swarm_node2::ensure')}"
+      hostname: 'docker_swarm_node2.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'docker_swarm_node'
+      security_group_name: sg_docker_swarm_node
+      security_group_description: 'docker_swarm_node Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            cidr: '10.0.0.0/24'
+            from_port: 30000
+            to_port: 40000        
+          - protocol: tcp
+            port: 2375
+            cidr: '0.0.0.0/0'            
+   'elkstack':
+      ip: "%{hiera('infrastructure::ec2::elkstack::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::elkstack::ensure')}"
+      hostname: 'elkstack.gcio.cloud'
+      instance_type: 't2.medium'
+      server_role: 'elkstack_server'
+      security_group_name: sg_elkstack
+      security_group_description: 'Elkstack Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 80
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            port: 9200
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 5044
+            cidr: '0.0.0.0/0'            
+          - protocol: tcp
+            port: 5601
+            cidr: '0.0.0.0/0'
+   'consul':
+      ip: "%{hiera('infrastructure::ec2::consul::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::consul::ensure')}"
+      hostname: 'consul.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'consul_server'
+      security_group_name: sg_consul
+      security_group_description: 'consul Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 80
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            from_port: 8300
+            to_port: 8303
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 8400
+            cidr: '0.0.0.0/0'            
+          - protocol: tcp
+            port: 8500
+            cidr: '0.0.0.0/0'  
+          - protocol: tcp
+            port: 8600
+            cidr: '0.0.0.0/0'            
+          - protocol: udp
+            port: 53
+            cidr: '0.0.0.0/0' 
+   'sensu':
+      ip: "%{hiera('infrastructure::ec2::sensu::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::sensu::ensure')}"
+      hostname: 'sensu.gcio.cloud'
+      instance_type: 't2.small'
+      server_role: 'sensu_server'
+      security_group_name: sg_sensu
+      security_group_description: 'Sensu Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 80
+            cidr: '0.0.0.0/0'     
+          - protocol: tcp
+            port: 3000
+            cidr: '0.0.0.0/0'            
+          - protocol: tcp
+            port: 4567
+            cidr: '0.0.0.0/0'  
+          - protocol: tcp
+            port: 5672
+            cidr: '0.0.0.0/0'            
+          - protocol: tcp
+            port: 8080
+            cidr: '0.0.0.0/0'   
+          - protocol: tcp
+            from_port: 15671
+            to_port: 15672
+            cidr: '0.0.0.0/0'  
+          - protocol: tcp
+            port: 4242
+            cidr: '0.0.0.0/0'            
+   'activemq':
+      ip: "%{hiera('infrastructure::ec2::activemq::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::activemq::ensure')}"
+      hostname: 'activemq.gcio.cloud'
+      instance_type: 't2.micro'
+      server_role: 'server_activemq'
+      security_group_name: sg_activemq
+      security_group_description: 'activemq Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'      
+          - protocol: tcp
+            port: 8161
+            cidr: '0.0.0.0/0'       
+          - protocol: tcp
+            from_port: 61613
+            to_port: 61614
+            cidr: '0.0.0.0/0'             
+   'app_server1':
+      ip: "%{hiera('infrastructure::ec2::app_server1::ip')}"
+      ensure: "%{hiera('infrastructure::ec2::app_server1::ensure')}"
+      hostname: 'app_server1.gcio.cloud'
+      instance_type: 't2.micro'
+      server_role: 'app_server1'
+      security_group_name: sg_app_servers1
+      security_group_description: 'App Server Security groups'
+      security_group_ingress: 
+          - protocol: tcp
+            port: 22
+            cidr: '0.0.0.0/0'
+          - protocol: tcp
+            cidr: '0.0.0.0/0'
+            port: 80
+                                                                         
+
+   
+
+       
+
+    
+
+
+ 
+    

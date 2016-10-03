@@ -1,0 +1,17 @@
+classes:
+  - roles::docker_app_flash
+  
+  
+  
+consul::services:
+  'haproxy':
+    port: 80
+    tags:
+      - app1_server
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:80"
+       interval: '10s'
+       timeout: '1s'

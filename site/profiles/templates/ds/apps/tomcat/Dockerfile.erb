@@ -1,0 +1,14 @@
+FROM frolvlad/alpine-oraclejdk8:slim
+MAINTAINER GCIO DevOps "fosinowo@governmentcio.com"
+
+ADD  https://tomcat.apache.org/tomcat-6.0-doc/appdev/sample/sample.war  /usr/local/tomcat/webapps
+# Import tomcat-users.xml file
+ADD tomcat-users.xml /usr/local/tomcat/conf/
+
+ADD helloworld.war /usr/local/tomcat/webapps
+
+RUN sh -c 'touch /app.jar'
+
+EXPOSE 8080
+
+ 

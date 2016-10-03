@@ -1,0 +1,44 @@
+classes:
+  - roles::server_elkstack
+
+sensu::subscriptions:
+  - all
+  - elk
+  
+
+    
+  
+consul::services:
+  elasticsearch:
+    port: 9200
+    tags:
+      - elasticsearch
+    checks:
+     - id: "elasticsearch-healthcheck"
+       name: "Healthcheck for elasticsearch service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}-elasticsearch"
+       tcp: "localhost:9200"
+       interval: '10s'
+       timeout: '1s'
+  kibana:
+    port: 5601
+    tags:
+      - kibana
+    checks:
+     - id: "kibana-healthcheck"
+       name: "Healthcheck for kibana service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}-kibana"
+       http: "https://%{::fqdn}:5601"
+       interval: '10s'
+       timeout: '1s'
+  logstash:
+    port: 5044
+    tags:
+      - logstash
+    checks:
+     - id: "logstash-healthcheck"
+       name: "Healthcheck for logstash service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}-logstash"
+       tcp: "localhost:5044"
+       interval: '10s'
+       timeout: '1s'
