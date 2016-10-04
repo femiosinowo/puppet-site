@@ -7,6 +7,10 @@ class profiles::base () {
   # file beat for log shipping
   include profiles::logs::filebeat
 
+class { selinux:
+  mode => 'disabled',
+  #type => 'targeted',
+}
   Exec {
     path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin', }
 
@@ -18,17 +22,32 @@ class profiles::base () {
   }
 
   class { '::consul':
-
+    #stage => 'dns',
   }
 
   class { 'profiles::ds::ssl_certs':
     common_name      => $::fqdn,
     email_address    => 'femi@paosin.local',
     days             => 730,
-    directory        => '/etc/ssl/web',
+    # directory        => '/etc/ssl/web',
     subject_alt_name => "DNS:*.${::domain}, DNS:${::domain}",
     stage            => 'dns',
   }
+
+  include dnsmasq
+
+  dnsmasq::conf { 'consul':
+    ensure  => present,
+    content => 'server=/consul/127.0.0.1#8600',
+  }
+
+  class { 'resolv_conf':
+    nameservers => ['127.0.0.1', '8.8.8.8'],
+    searchpath  => ['consul', 'paosin.local', $::domain],
+    stage       => 'dns',
+  }
+
+  Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] #-> Class['::consul']
 
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,

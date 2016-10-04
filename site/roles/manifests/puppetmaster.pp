@@ -1,5 +1,7 @@
 class roles::puppetmaster () {
-  stage { 'testing': }
+  #
+  include profiles::stages
+
   include profiles::puppet::r10k
   # include r10k::mcollective
 

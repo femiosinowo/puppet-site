@@ -3,6 +3,7 @@
   box:  puppet-server
   ram: 3072
   ip: 172.17.8.101
+  server_role: puppet_server
 - hostname: consul
   box: rhel.7.base
   ram: 1024
@@ -13,10 +14,15 @@
   ram: 1024
   ip: 172.17.8.103
   server_role: elkstack_server
-- hostname: rabbitmq
+- hostname: rabbitmq-0
   box: rhel.7.base
   ram: 512
   ip: 172.17.8.104
+  server_role: rabbitmq_server
+- hostname: rabbitmq-1
+  box: rhel.7.base
+  ram: 512
+  ip: 172.17.8.107
   server_role: rabbitmq_server
 - hostname: sensu
   box: rhel.7.base

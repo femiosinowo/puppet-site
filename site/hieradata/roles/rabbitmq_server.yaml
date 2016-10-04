@@ -1,3 +1,17 @@
 classes:
   - epel
   - roles::rabbitmq
+  
+consul::server: false
+consul::services:
+  'rabbitmq':
+    port: 5672
+    tags:
+      - rabbitmq
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:5672"
+       interval: '10s'
+       timeout: '1s'

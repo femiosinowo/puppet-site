@@ -145,7 +145,7 @@ mod 'evenup/redis',
 #rabbitmq
 mod 'puppetlabs/rabbitmq',
 	:git => 'https://github.com/puppetlabs/puppetlabs-rabbitmq.git',
-	:ref => '5.4.0'
+	:ref => '5.5.0'
 
 mod 'garethr/erlang',
 	:git => 'https://github.com/garethr/garethr-erlang.git'

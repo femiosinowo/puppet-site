@@ -13,17 +13,7 @@ class profiles::monitor::consul () {
   #    notify => Service['dnsmaq'],
   #  }
 
-  include dnsmasq
 
-  dnsmasq::conf { 'consul':
-    ensure  => present,
-    content => 'server=/consul/127.0.0.1#8600',
-  }
-
-  class { 'resolv_conf':
-    nameservers => ['127.0.0.1', '8.8.8.8'],
-    searchpath  => ['consul', 'paosin.local', $::domain]
-  }
 
   #  $aliases = ['consul', $::fqdn]
   #
