@@ -1,0 +1,23 @@
+classes:
+  - roles::repo_server
+ 
+
+consul::server: false
+consul::services:
+  'repo_server':
+    port: 80
+    token: "%{hiera('consul::service_write_token')}"
+    tags:
+      - repo_server
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:80"
+       interval: '10s'
+       timeout: '1s'
+       
+firewall::ports:
+ '101 allow TCP ports':
+   dport: 80
+   proto: 'tcp'

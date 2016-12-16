@@ -1,0 +1,35 @@
+classes:
+ - roles::messaging::activemq
+# - mcollective::middleware
+ 
+consul::server: false
+consul::services:
+  'activemq':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 61616
+    tags:
+      - activemq
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:61616"
+       interval: '10s'
+       timeout: '1s'
+  'activemq-stomp':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 61613
+    tags:
+      - activemqstomp
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:61613"
+       interval: '10s'
+       timeout: '1s'
+             
+firewall::ports:
+ '101 allow TCP ports':
+   dport: [61613,61616,8161]
+   proto: 'tcp'

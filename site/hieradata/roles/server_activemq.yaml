@@ -1,6 +1,7 @@
 consul::services:
   'ActiveMQ':
     port: 61614
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - ActiveMQServer
     checks:

@@ -27,7 +27,9 @@ mod 'puppetlabs/java',
 	
 mod 'darin/zypprepo',
 	:git => 'https://github.com/deadpoint/puppet-zypprepo.git'
-	
+
+mod 'WhatsARanjit-plexmediaserver', '2.2.0'
+
 mod 'nanliu/staging',
 	:git => 'https://github.com/nanliu/puppet-staging.git',
 	:ref => '1.0.4'
@@ -56,7 +58,7 @@ mod 'jlondon/phpmyadmin',
 #consul
 mod 'KyleAnderson/consul',
 	:git => 'https://github.com/solarkennedy/puppet-consul.git',
-	:ref => 'v1.0.10'
+	:ref => 'v1.0.9'
 	
 mod 'puppet/archive',
 	:git => 'https://github.com/voxpupuli/puppet-archive.git',
@@ -204,18 +206,16 @@ mod 'ispavailability/file_concat',
 	:git => 'https://github.com/electrical/puppet-lib-file_concat.git',
 	:ref => '1.0.1'
 
-mod 'ceritsc/yum',
-	:git => 'https://github.com/CERIT-SC/puppet-yum.git',
-	:ref => '0.9.8'
+mod 'jlambert121/yum',
+	:git => 'https://github.com/jlambert121/jlambert121-yum.git',
+	:ref => '0.2.1'
 
 mod 'maestrodev/wget',
 	:git => 'https://github.com/maestrodev/puppet-wget.git',
 	:ref => 'v1.7.3'
 
  
-mod 'richardc/datacat',
-	:git => 'https://github.com/richardc/puppet-datacat.git',
-	:ref => '0.6.2'
+mod 'richardc-datacat', '0.6.2'
 
 mod 'willdurand/nodejs'
 
@@ -236,15 +236,13 @@ mod 'gdhbashton/consul_template',
 
 
 #mcollective
-mod 'jorhett/mcollective',
-	:git  => 'https://github.com/jorhett/puppet-mcollective.git'
-
+#mod 'camptocamp-mcollective', '3.1.3'
+#mod 'jorhett-mcollective', '1.0.3'
+mod 'puppet-mcollective', '2.3.0'
 mod 'puppetlabs/java_ks'
 
 #activemq
-mod 'maestrodev/activemq',
-	:git => 'https://github.com/maestrodev/puppet-activemq.git',
-	:ref => 'v2.0.3'
+mod 'maestrodev-activemq', '2.0.3'
 
 
 #dockerswarm
@@ -257,12 +255,12 @@ mod 'adrien/alternatives',
 	:git => 'https://github.com/voxpupuli/puppet-alternatives.git',
 	:ref => 'v1.0.1'
 	
- mod 'puppetlabs/postgresql',
-	:git => 'https://github.com/puppetlabs/puppetlabs-postgresql.git',
-	:ref => '4.8.0'
- 
- 
+
+mod 'puppetlabs-postgresql', '4.8.0' 
  
 mod 'puppet/extlib',
 	:git => 'https://github.com/voxpupuli/puppet-extlib.git',
 	:ref => 'v1.0.0'
+
+mod 'puppetlabs-puppetdb', '5.1.2'
+mod 'puppetlabs-firewall', '1.8.1'

@@ -1,0 +1,51 @@
+input {
+  
+  
+  
+  rabbitmq {
+    #arguments => { "x-ha-policy" => "all" }
+    user => 'logstash'
+    password => 'logstash'
+    durable => true
+    exchange => 'exchangelogstash'
+    host => ["<%= @rabbitmq_service %>"]
+    key => 'logs.%{host}'
+    port => 5672
+    queue => 'queuelogstash'
+    vhost => '/logstash'
+  }
+  
+  
+ 
+  
+}
+
+#filter {
+#  if [type] == "syslog" {
+
+    
+    
+#    grok {
+#      match => { "message" => "%{DATA:message}({({[^}]+},?\s*)*})?\s*$(?<stacktrace>(?m:.*))" }
+#      add_field => [ "received_at", "%{@timestamp}" ]
+#      add_field => [ "received_from", "%{host}" ]
+#    }
+           
+#    syslog_pri { }
+#    date {
+#      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+#    }
+#  }
+#}
+
+output {
+   elasticsearch {
+    hosts => ["<%= @elastic_search_url %>"]
+    #index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+    #document_type => "%{[@metadata][type]}"
+  }
+  
+  
+   
+}
+ 

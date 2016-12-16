@@ -1,6 +1,6 @@
 #!/bin/bash
 
-server=http://10.0.0.101/artifactory
+server=http://54.209.251.243/artifactory
 #repo=dhs-flash-snapshot-local
 
 # Maven artifact location
@@ -14,18 +14,25 @@ server=http://10.0.0.101/artifactory
 
 #ersion="$(xml2 < curl -s $path/maven-metadata.xml | grep /metadata/versioning/snapshotVersions/snapshotVersion/value | cut -d"=" -f2 | head -n1)"
 
-mavenxmlpath=http://10.0.0.101/artifactory/dhs-flash-snapshot-local/gov/dhs/flash/flashService/0.0.1-SNAPSHOT/maven-metadata.xml
+some_path=irs-agiletech-snapshot-local/gov/irs/agiletech/account/0.0.1-SNAPSHOT 
+ 
+mavenxmlpath=$server/$some_path/maven-metadata.xml
 
-jarpath=http://10.0.0.101/artifactory/dhs-flash-snapshot-local/gov/dhs/flash/flashService/0.0.1-SNAPSHOT/flashService
+jarpath=$server/$some_path/account
 
 build=`curl -s $mavenxmlpath | grep '<value>' | head -1 | sed "s/.*<value>\([^<]*\)<\/value>.*/\1/"`
 
 url=$jarpath-$build.jar
 
 # Download
+#kill $(ps aux | grep 'java -jar' | awk '{print $2}'  | head -1)
+sudo pgrep '^java*'| xargs kill -9
+cd /root/app1/
 
-wget -O /root/app1/app.jar -q -N $url
-rm -rf /root/app1/govcio-hackathon
-cd /root/app1
-git clone git@bitbucket.org:lookthink/govcio-hackathon.git
-cp -r /root/app1/govcio-hackathon/public/* /var/www/html
+rm -rf app.jar
+wget -O app.jar -q -N $url
+
+
+
+#git clone git@github.devgovcio.com:IRS/agiletech.git
+#cp -r agiletech/templates/* /var/www/html

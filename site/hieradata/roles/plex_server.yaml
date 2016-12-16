@@ -1,0 +1,16 @@
+classes:
+  - roles::plex_server
+  
+consul::services:
+  plexserver:
+    port: 32400
+    token: "%{hiera('consul::service_write_token')}"
+    tags:
+      - plexserver
+    checks:
+     - id: "plexserver-healthcheck"
+       name: "Healthcheck for plexserver service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}-elasticsearch"
+       tcp: "localhost:32400"
+       interval: '10s'
+       timeout: '1s'

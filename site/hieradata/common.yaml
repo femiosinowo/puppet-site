@@ -1,9 +1,12 @@
 classes:
  - profiles::base
+ - profiles::stages
  - profiles::logs::filebeat
-# - ssl
- #- sensu
- #- profiles::monitor::sensu_plugins
+ - profiles::firewall
+ - mcollective
+# - mcollective::server
+# - sensu
+# - profiles::monitor::sensu_plugins
 
 
 infrastructure::ec2::consul::ip: '172.17.8.102'
@@ -12,7 +15,7 @@ infrastructure::ec2::rabbitmq::ip: '172.17.8.104'
 infrastructure::ec2::sensu::ip: '172.17.8.105'
 infrastructure::ec2::activemq::ip: '172.17.8.106'
  
- 
+
     
 sensu::server_ip: "%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::server: false
@@ -75,6 +78,7 @@ sensu::checks:
     command: '/opt/sensu/embedded/bin/check-haproxy.rb -S localhost'
     subscribers: 'elk'
      
+
 #certs details
 private_key: "/apps/ssl/key.pem"
 csr_server_cerets: "/apps/ssl/server.csr"
@@ -84,22 +88,24 @@ root_ca: "/apps/ssl/cacerts/ca.cert.pem"
 root_private_key: "/apps/ssl/cacerts/ca.key.pem"
 intermediate_ca: "/apps/ssl/cacerts/intermediate.cert.pem"
 intermediate_private_key: "/apps/ssl/cacerts/intermediate.key.pem"
-ca_bundle: "/apps/ssl/cacerts/ca_bundle.pem"
+ca_bundle: "/apps/ssl/cacerts/ca_bundle.pem"  
     
-mcollective::client_password: P@ssw0rdP@ssw0rd
-mcollective::server_password: P@ssw0rdP@ssw0rd
-mcollective::psk_key: f525ae7c92fca724b06ed6701cf99ca255e992f9a057084ddbfb75c73dc9c4d9
-mcollective::hosts:
-- activemq.paosin.local
+consul::srv_acl_token_master: '535bb022-0318-41a5-a535-4b1142a78e3c'
+consul::srv_acl_default_policy: 'deny'
+consul::srv_acl_down_policy: 'deny'
+consul::srv_acl_datacenter: 'paosin-md'
+
+consul::service_write_token: 'c36f9c3a-b1af-4fad-a58c-5533c7d2a7fe'
+consul::service_read_token: '35853dd9-f4b6-4193-bac5-5934d303f0c4'
 
 
 consul::config_hash:
   datacenter: 'paosin-md'
-  domain: 'consul'
+  acl_token: "%{hiera('consul::service_read_token')}"
+  #domain: 'consul'
   node_name: "%{::hostname}"
   bind_addr: "%{::ipaddress_eth1}"
   advertise_addr: "%{::ipaddress_eth1}"
-  #encrypt: "uGTzSDyGIbQflYFtKNJNWQ=="
   ca_file: "/apps/ssl/cacerts/intermediate.cert.pem"
   cert_file: "/apps/ssl/server_certs.pem"
   key_file: "/apps/ssl/key.pem"
@@ -107,14 +113,49 @@ consul::config_hash:
   verify_outgoing: false
   ports:
     https: 8543
-  #recursor: '10.0.0.2' 
   data_dir: '/opt/consul'
   retry_join: 
     - "%{hiera('infrastructure::ec2::consul::ip')}"
+    
+firewall::ports:
+ '100 allow SSH 22':
+   dport: 22
+   proto: 'tcp'
+   
+#yum::repos:
+#  local_repo:
+#    descr: 'PaOsin.local repo - x86_64'
+#    baseurl: 'http://172.17.8.115/'
+yum::repos:
+  puppetlabs-deps:
+    descr: 'Puppet Labs Dependencies El 7 - $basearch'
+    baseurl: 'http://yum.puppetlabs.com/el/7/dependencies/$basearch'
+    gpgcheck: 1
+    gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs'    
+    
 
 elkstack::ip: "%{hiera('infrastructure::ec2::elkstack::ip')}"
-elkstack::filebeat::ip::port: "%{hiera('infrastructure::ec2::elkstack::ip')}:5044"
+#elkstack::filebeat::ip::port: "%{hiera('infrastructure::ec2::elkstack::ip')}:5044"
+elkstack::filebeat::ip::port: "logstash.service.consul:5044"
 
 consul::server::ip: "%{hiera('infrastructure::ec2::consul::ip')}"
 consul::server::port: 8500
+
+mcollective::client: false
+mcollective::middleware_hosts: activemq.service.paosin-md.consul
+mcollective::client_password: P@ssw0rdP@ssw0rd
+mcollective::server_password: P@ssw0rdP@ssw0rd
+mcollective::psk_key: f525ae7c92fca724b06ed6701cf99ca255e992f9a057084ddbfb75c73dc9c4d9
+#mcollective::hosts:
+# - activemq.service.paosin-md.consul
+mcollective::plugins:
+ package:
+  source: 'puppet:///modules/profiles/mcollective/plugins/package'
+ service:
+  source: 'puppet:///modules/profiles/mcollective/plugins/service'
+ filemgr:
+  source: 'puppet:///modules/profiles/mcollective/plugins/filemgr'
+ puppet:
+  source: 'puppet:///modules/profiles/mcollective/plugins/puppet'
+
  

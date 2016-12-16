@@ -11,8 +11,29 @@ sensu::checks:
     command: '/opt/sensu/embedded/bin/check-haproxy.rb'   
   'checkpuppet-last-run':
     command: '/opt/sensu/embedded/bin/checkpuppet-last-run.rb'
-    
-    
+
+#consul::acls::acl_api_token: 'f45cbd0b-5022-47ab-8640-4eaa7c1f40f1'
+ 
+
+consul::acl:
+  'services-write':
+      id: "%{hiera('consul::service_write_token')}"
+      ensure: present
+      type: client
+      rules:
+        - service:
+            '':
+              policy: write
+  'services-read':
+      ensure: present
+      id: "%{hiera('consul::service_read_token')}"
+      type: client
+      rules:
+        - service:
+            '':
+              policy: read
+
+
 consul::config_hash:
   log_level: 'INFO'
   server: true
@@ -20,7 +41,11 @@ consul::config_hash:
   ui_dir: '/opt/consul/ui'
   client_addr: '0.0.0.0'
   datacenter: 'paosin-md'
-  domain: 'consul'
+  acl_datacenter: "%{hiera('consul::srv_acl_datacenter')}"
+  acl_master_token: "%{hiera('consul::srv_acl_token_master')}"
+  acl_default_policy: "%{hiera('consul::srv_acl_default_policy')}"
+  acl_down_policy: "%{hiera('consul::srv_acl_down_policy')}"
+  #domain: 'consul'
   data_dir:  '/opt/consul'
   bind_addr: "%{::ipaddress_eth1}"
   node_name: "%{::fqdn}"
@@ -30,12 +55,14 @@ consul::config_hash:
   key_file: "/apps/ssl/key.pem"
   verify_incoming: false
   verify_outgoing: false
+  acl_token: "%{hiera('consul::service_read_token')}"
   ports:
     https: 8543
     
 
 consul::services:
   'consul_server':
+    token: "%{hiera('consul::service_write_token')}"
     port: 8500
     tags:
       - consul_server
@@ -46,3 +73,11 @@ consul::services:
        tcp: "localhost:8500"
        interval: '10s'
        timeout: '1s'
+
+firewall::ports:
+ '101 allow TCP ports':
+   dport: [8300,8301,8302,8500,8543,8600]
+   proto: 'tcp'
+ '102 allow UDP ports':
+   dport: 8600
+   proto: 'udp'

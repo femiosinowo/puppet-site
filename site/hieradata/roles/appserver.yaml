@@ -1,0 +1,18 @@
+classes:
+  - roles::apps::irs
+  
+  
+  
+consul::services:
+  'irs-app':
+    port: 8080
+    token: "%{hiera('consul::service_write_token')}"
+    tags:
+      - app1_server
+    checks:
+     - id: "%{::server_role}-healthcheck"
+       name: "Healthcheck for service %{::server_role} in %{::environment}"
+       service_id: "%{::environment}-%{::server_role}"
+       tcp: "localhost:8080"
+       interval: '10s'
+       timeout: '1s'

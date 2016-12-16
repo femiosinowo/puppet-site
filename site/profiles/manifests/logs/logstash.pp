@@ -1,31 +1,17 @@
 class profiles::logs::logstash (
-  $input   = 'profiles/logstash/server/centos-messages-input.erb',
-  $filters = ['profiles/logstash/server/centos-messages-filter.erb'],
-  $output  = 'profiles/logstash/server/centos-messages-output.erb',) {
-  file { '/etc/pki/tls/certs/logstash-forwarder.crt':
-    ensure  => file,
-    source  => "puppet:///modules/profiles/logstash/logstash-forwarder.crt",
-    alias   => 'cert_file',
-    require => File['cert_dir'],
-  }
-
-  #  class { selinux:
-  #    mode => 'disabled',
-  #    type => 'targeted',
-  #  }
-
-  file { '/etc/pki/tls/private/logstash-forwarder.key':
-    ensure  => file,
-    source  => "puppet:///modules/profiles/logstash/logstash-forwarder.key",
-    require => File['cert_dir'],
-  }
-
-  file { '/etc/pki/tls/certs':
-    ensure => directory,
-    group  => root,
-    alias  => 'cert_dir',
-    before => File['cert_file'],
-  }
+  $input              = 'profiles/logstash/server/centos-messages-input.erb',
+  $filters            = ['profiles/logstash/server/centos-messages-filter.erb'],
+  $output             = 'profiles/logstash/server/centos-messages-output.erb',
+  $private_key        = hiera("private_key"),
+  $server_certs       = hiera("server_certs"),
+  $root_ca            = hiera("root_ca"),
+  $intermediate_ca    = hiera("intermediate_ca"),
+  $ca_bundle          = hiera("ca_bundle"),
+  $elastic_search_url = "http://${::fqdn}:9200",
+  $rabbitmq_service   = "rabbitmq.service.consul"
+  #
+  ) {
+  ##
 
   class { '::logstash':
     ensure       => 'present',
@@ -37,15 +23,6 @@ class profiles::logs::logstash (
   # repo_version => '2.2',
   }
 
-#  profiles::defines::plugchecksensu { 'fs-check':
-#    pluginname => 'sensu-plugins-filesystem-checks',
-#    command    => 'check-dir-count.rb'
-#  }
-
-  #  profile::plugchecksensu { 'fs-check':
-  #    pluginname => ' sensu-plugins-filesystem-checks',
-  #    command    => 'check-dir-count.rb'
-  #  }
   #  logstash::configfile { 'input':
   #    content => template($input),
   #    order   => 10,
@@ -63,15 +40,14 @@ class profiles::logs::logstash (
   #    order   => 30,
   #  }
 
-  logstash::configfile { '/etc/logstash/conf.d/config.conf': content => template('profiles/logstash/config.conf.erb'), }
+  logstash::configfile { '/etc/logstash/conf.d/producer.conf': content => template('profiles/logstash/producer.conf.erb'), }
 
-  # logstash::plugin { 'logstash-input-beats': }
+  logstash::configfile { '/etc/logstash/conf.d/consumer.conf': content => template('profiles/logstash/consumer.conf.erb'), }
+
   logstash::plugin { 'logstash-input-beats': }
 
-  #  exec { 'create_certs':
-  #    require => File['cert_dir'],
-  #    path    => "/usr/bin:/usr/sbin:/bin",
-  #    command => 'openssl req -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout /etc/pki/tls/private/logstash-forwarder.key
-  #    -out /etc/pki/tls/certs/logstash-forwarder.crt',
-  #  }
+  logstash::plugin { 'logstash-output-rabbitmq': }
+
+  logstash::plugin { 'logstash-input-rabbitmq': }
+
 }

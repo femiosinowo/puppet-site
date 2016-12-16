@@ -31,11 +31,12 @@ class profiles::logs::filebeat ($elkstack_filebeat_ip_port = hiera('elkstack::fi
         'paths'    => [
           #          '/var/log/*.log',
           '/var/log/audit/*.log',
-          '/var/log/dhs_app1.log',
+          '/var/log/irs_app1.log',
           #          '/var/log/messages',
           #          '/var/log/secure',
           #          '/var/log/sensu/*.log',
-          '/var/log/messages'],
+           '/var/log/messages'
+          ],
         'log_type' => 'syslog',
 
       }

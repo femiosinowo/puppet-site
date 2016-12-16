@@ -2,15 +2,11 @@ class profiles::base () {
   include ssh
   include motd
   include stdlib
-  include epel
   include wget
+  include epel
   # file beat for log shipping
   include profiles::logs::filebeat
 
-class { selinux:
-  mode => 'disabled',
-  #type => 'targeted',
-}
   Exec {
     path => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin', }
 
@@ -21,8 +17,26 @@ class { selinux:
     require  => Package['wget', 'unzip'],
   }
 
+  #  class { 'epel':
+  #    stage => 'pre'
+  #  }
+
+  class { '::ruby':
+    gems_version => 'latest',
+    stage        => 'pre'
+  }
+
+  class { selinux:
+    mode  => 'disabled',
+    stage => 'pre'
+  }
+
+  class { 'yum':
+    stage => 'repo'
+  }
+
   class { '::consul':
-    #stage => 'dns',
+  # stage => 'dns',
   }
 
   class { 'profiles::ds::ssl_certs':
@@ -43,11 +57,36 @@ class { selinux:
 
   class { 'resolv_conf':
     nameservers => ['127.0.0.1', '8.8.8.8'],
-    searchpath  => ['consul', 'paosin.local', $::domain],
+    searchpath  => ['node.consul', 'paosin.local', $::domain],
     stage       => 'dns',
   }
 
-  Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] #-> Class['::consul']
+  Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] # -> Class['::consul']
+
+
+  #  mcollective::plugin { 'puppet': }
+  #
+  #  mcollective::plugin { 'service': }
+  #
+  #  mcollective::plugin { 'filemgr': }
+  #
+  #  mcollective::plugin { 'package': }
+
+  #   firewall { '100 allow Port 80':
+  #    dport  => [80, 443],
+  #    proto  => tcp,
+  #    action => accept,
+  #  }
+
+  # mcollective::plugin { 'apt': source => 'puppet:///modules/site_mcollective/plugins/apt', }
+
+
+  create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
+
+  $firewall_defaults = {
+    action => 'accept',
+  }
+  create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
 
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,
@@ -62,27 +101,17 @@ class { selinux:
   # common packages needed everywhere
   package { ['tree', 'sudo', 'screen']: ensure => present, }
 
-  #  mcollective::plugin::agent { 'filemgr': }
-  #
-  #  mcollective::plugin::agent { 'nettest': }
-  #
-  #  mcollective::plugin::agent { 'package': }
-  #
-  #  mcollective::plugin::agent { 'service': }
-  #
-  #  mcollective::plugin::agent { 'puppet': }
-
-  #  file { "/etc/mcollective/facts.yaml":
-  #    owner    => root,
-  #    group    => root,
-  #    mode     => 400,
-  #    loglevel => debug, # reduce noise in Puppet reports
-  #    content  => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime_seconds|timestamp|free)/ }.to_yaml %>"),
-  #  # exclude
-  #  # rapidly
-  #  # changing
-  #  # facts
-  #  }
+  #    file { "/etc/mcollective/facts.yaml":
+  #      owner    => root,
+  #      group    => root,
+  #      mode     => 400,
+  #      loglevel => debug, # reduce noise in Puppet reports
+  #      content  => inline_template("<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime_seconds|timestamp|free)/ }.to_yaml %>"),
+  #    # exclude
+  #    # rapidly
+  #    # changing
+  #    # facts
+  #    }
 
   exec { '/apps/pki':
     command => 'mkdir -p /apps/pki',
@@ -92,5 +121,5 @@ class { selinux:
   # refreshonly => true,
   }
 
-  Stage['dns'] -> Stage['main'] -> Stage['testing']
+  Stage['repo'] -> Stage['dns'] -> Stage['pre'] -> Stage['main'] -> Stage['testing']
 }

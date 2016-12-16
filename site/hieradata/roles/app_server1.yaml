@@ -6,6 +6,7 @@ classes:
 consul::services:
   'haproxy':
     port: 80
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - app1_server
     checks:

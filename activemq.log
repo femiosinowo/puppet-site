@@ -1,0 +1,157 @@
+2016-12-14 17:56:41,995 [main           ] INFO  XBeanBrokerFactory$1           - Refreshing org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 17:56:41 UTC 2016]; root of context hierarchy
+2016-12-14 17:56:44,959 [main           ] INFO  PListStoreImpl                 - PListStore:[/usr/share/activemq/data/localhost/tmp_storage] started
+2016-12-14 17:56:44,991 [main           ] INFO  BrokerService                  - Using Persistence Adapter: KahaDBPersistenceAdapter[/usr/share/activemq/data/kahadb]
+2016-12-14 17:56:45,521 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-33677-1481738205390-0:1) is starting
+2016-12-14 17:56:45,560 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: tcp://activemq.paosin.local:61616?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 17:56:45,561 [main           ] INFO  TransportConnector             - Connector openwire started
+2016-12-14 17:56:45,584 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: amqp://activemq.paosin.local:5672?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 17:56:45,585 [main           ] INFO  TransportConnector             - Connector amqp started
+2016-12-14 17:56:45,589 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: stomp://activemq.paosin.local:61613?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 17:56:45,589 [main           ] INFO  TransportConnector             - Connector stomp started
+2016-12-14 17:56:45,592 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: mqtt://activemq.paosin.local:1883?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 17:56:45,592 [main           ] INFO  TransportConnector             - Connector mqtt started
+2016-12-14 17:56:45,729 [main           ] INFO  Server                         - jetty-7.6.9.v20130131
+2016-12-14 17:56:45,807 [main           ] INFO  ContextHandler                 - started o.e.j.s.ServletContextHandler{/,null}
+2016-12-14 17:56:45,999 [main           ] INFO  AbstractConnector              - Started SelectChannelConnector@0.0.0.0:61614
+2016-12-14 17:56:45,999 [main           ] INFO  WSTransportServer              - Listening for connections at ws://activemq.paosin.local:61614?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 17:56:45,999 [main           ] INFO  TransportConnector             - Connector ws started
+2016-12-14 17:56:46,011 [main           ] ERROR BrokerService                  - Failed to start Apache ActiveMQ ([localhost, ID:activemq.paosin.local-33677-1481738205390-0:1], java.io.IOException: Transport Connector could not be registered in JMX: Failed to bind to server socket: stomp+nio://0.0.0.0:61613?transport.closeAsync=false due to: java.net.BindException: Address already in use)
+2016-12-14 17:56:46,013 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-33677-1481738205390-0:1) is shutting down
+2016-12-14 17:56:46,021 [main           ] INFO  TransportConnector             - Connector openwire stopped
+2016-12-14 17:56:46,023 [main           ] INFO  TransportConnector             - Connector amqp stopped
+2016-12-14 17:56:46,024 [main           ] INFO  TransportConnector             - Connector stomp stopped
+2016-12-14 17:56:46,024 [main           ] INFO  TransportConnector             - Connector mqtt stopped
+2016-12-14 17:56:46,038 [main           ] INFO  ContextHandler                 - stopped o.e.j.s.ServletContextHandler{/,null}
+2016-12-14 17:56:46,092 [main           ] INFO  TransportConnector             - Connector ws stopped
+2016-12-14 17:56:46,092 [main           ] INFO  TransportConnector             - Connector stomp+nio stopped
+2016-12-14 17:56:46,097 [main           ] INFO  PListStoreImpl                 - PListStore:[/usr/share/activemq/data/localhost/tmp_storage] stopped
+2016-12-14 17:56:46,097 [main           ] INFO  KahaDBStore                    - Stopping async queue tasks
+2016-12-14 17:56:46,097 [main           ] INFO  KahaDBStore                    - Stopping async topic tasks
+2016-12-14 17:56:46,098 [main           ] INFO  KahaDBStore                    - Stopped KahaDB
+2016-12-14 17:56:46,357 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-33677-1481738205390-0:1) uptime 1.384 seconds
+2016-12-14 17:56:46,357 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-33677-1481738205390-0:1) is shutdown
+2016-12-14 17:56:46,357 [main           ] INFO  XBeanBrokerFactory$1           - Closing org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 17:56:41 UTC 2016]; root of context hierarchy
+2016-12-14 17:56:46,365 [main           ] WARN  XBeanBrokerFactory$1           - Exception thrown from LifecycleProcessor on context close
+java.lang.IllegalStateException: LifecycleProcessor not initialized - call 'refresh' before invoking lifecycle methods via the context: org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 17:56:41 UTC 2016]; root of context hierarchy
+	at org.springframework.context.support.AbstractApplicationContext.getLifecycleProcessor(AbstractApplicationContext.java:360)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1057)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1010)
+	at org.apache.activemq.hooks.SpringContextHook.run(SpringContextHook.java:30)
+	at org.apache.activemq.broker.BrokerService.stop(BrokerService.java:809)
+	at org.apache.activemq.xbean.XBeanBrokerService.stop(XBeanBrokerService.java:122)
+	at org.apache.activemq.broker.BrokerService.start(BrokerService.java:601)
+	at org.apache.activemq.xbean.XBeanBrokerService.afterPropertiesSet(XBeanBrokerService.java:73)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1579)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:296)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:293)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:628)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:64)
+	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:52)
+	at org.apache.activemq.xbean.XBeanBrokerFactory$1.<init>(XBeanBrokerFactory.java:104)
+	at org.apache.activemq.xbean.XBeanBrokerFactory.createApplicationContext(XBeanBrokerFactory.java:104)
+	at org.apache.activemq.xbean.XBeanBrokerFactory.createBroker(XBeanBrokerFactory.java:67)
+	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:71)
+	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:54)
+	at org.apache.activemq.console.command.StartCommand.runTask(StartCommand.java:87)
+	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:57)
+	at org.apache.activemq.console.command.ShellCommand.runTask(ShellCommand.java:150)
+	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:57)
+	at org.apache.activemq.console.command.ShellCommand.main(ShellCommand.java:104)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.activemq.console.Main.runTaskClass(Main.java:262)
+	at org.apache.activemq.console.Main.main(Main.java:115)
+2016-12-14 18:00:57,330 [main           ] INFO  XBeanBrokerFactory$1           - Refreshing org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 18:00:57 UTC 2016]; root of context hierarchy
+2016-12-14 18:00:59,124 [main           ] INFO  PListStoreImpl                 - PListStore:[/usr/share/activemq/data/localhost/tmp_storage] started
+2016-12-14 18:00:59,139 [main           ] INFO  BrokerService                  - Using Persistence Adapter: KahaDBPersistenceAdapter[/usr/share/activemq/data/kahadb]
+2016-12-14 18:00:59,465 [main           ] INFO  MessageDatabase                - KahaDB is version 5
+2016-12-14 18:00:59,651 [main           ] INFO  MessageDatabase                - Recovering from the journal ...
+2016-12-14 18:00:59,652 [main           ] INFO  MessageDatabase                - Recovery replayed 1 operations from the journal in 0.16 seconds.
+2016-12-14 18:00:59,800 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-38955-1481738459675-0:1) is starting
+2016-12-14 18:00:59,824 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: tcp://activemq.paosin.local:61616?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 18:00:59,825 [main           ] INFO  TransportConnector             - Connector openwire started
+2016-12-14 18:00:59,834 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: amqp://activemq.paosin.local:5672?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 18:00:59,834 [main           ] INFO  TransportConnector             - Connector amqp started
+2016-12-14 18:00:59,837 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: stomp://activemq.paosin.local:61613?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 18:00:59,837 [main           ] INFO  TransportConnector             - Connector stomp started
+2016-12-14 18:00:59,863 [main           ] INFO  TransportServerThreadSupport   - Listening for connections at: mqtt://activemq.paosin.local:1883?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 18:00:59,864 [main           ] INFO  TransportConnector             - Connector mqtt started
+2016-12-14 18:00:59,970 [main           ] INFO  Server                         - jetty-7.6.9.v20130131
+2016-12-14 18:01:00,051 [main           ] INFO  ContextHandler                 - started o.e.j.s.ServletContextHandler{/,null}
+2016-12-14 18:01:00,114 [main           ] INFO  AbstractConnector              - Started SelectChannelConnector@0.0.0.0:61614
+2016-12-14 18:01:00,114 [main           ] INFO  WSTransportServer              - Listening for connections at ws://activemq.paosin.local:61614?maximumConnections=1000&wireFormat.maxFrameSize=104857600
+2016-12-14 18:01:00,114 [main           ] INFO  TransportConnector             - Connector ws started
+2016-12-14 18:01:00,119 [main           ] ERROR BrokerService                  - Failed to start Apache ActiveMQ ([localhost, ID:activemq.paosin.local-38955-1481738459675-0:1], java.io.IOException: Transport Connector could not be registered in JMX: Failed to bind to server socket: stomp+nio://0.0.0.0:61613?transport.closeAsync=false due to: java.net.BindException: Address already in use)
+2016-12-14 18:01:00,120 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-38955-1481738459675-0:1) is shutting down
+2016-12-14 18:01:00,122 [main           ] INFO  TransportConnector             - Connector openwire stopped
+2016-12-14 18:01:00,122 [main           ] INFO  TransportConnector             - Connector amqp stopped
+2016-12-14 18:01:00,122 [main           ] INFO  TransportConnector             - Connector stomp stopped
+2016-12-14 18:01:00,122 [main           ] INFO  TransportConnector             - Connector mqtt stopped
+2016-12-14 18:01:00,133 [main           ] INFO  ContextHandler                 - stopped o.e.j.s.ServletContextHandler{/,null}
+2016-12-14 18:01:00,184 [main           ] INFO  TransportConnector             - Connector ws stopped
+2016-12-14 18:01:00,184 [main           ] INFO  TransportConnector             - Connector stomp+nio stopped
+2016-12-14 18:01:00,186 [main           ] INFO  PListStoreImpl                 - PListStore:[/usr/share/activemq/data/localhost/tmp_storage] stopped
+2016-12-14 18:01:00,186 [main           ] INFO  KahaDBStore                    - Stopping async queue tasks
+2016-12-14 18:01:00,186 [main           ] INFO  KahaDBStore                    - Stopping async topic tasks
+2016-12-14 18:01:00,187 [main           ] INFO  KahaDBStore                    - Stopped KahaDB
+2016-12-14 18:01:00,517 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-38955-1481738459675-0:1) uptime 1.379 seconds
+2016-12-14 18:01:00,517 [main           ] INFO  BrokerService                  - Apache ActiveMQ 5.9.1 (localhost, ID:activemq.paosin.local-38955-1481738459675-0:1) is shutdown
+2016-12-14 18:01:00,517 [main           ] INFO  XBeanBrokerFactory$1           - Closing org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 18:00:57 UTC 2016]; root of context hierarchy
+2016-12-14 18:01:00,519 [main           ] WARN  XBeanBrokerFactory$1           - Exception thrown from LifecycleProcessor on context close
+java.lang.IllegalStateException: LifecycleProcessor not initialized - call 'refresh' before invoking lifecycle methods via the context: org.apache.activemq.xbean.XBeanBrokerFactory$1@2c9f9fb0: startup date [Wed Dec 14 18:00:57 UTC 2016]; root of context hierarchy
+	at org.springframework.context.support.AbstractApplicationContext.getLifecycleProcessor(AbstractApplicationContext.java:360)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1057)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1010)
+	at org.apache.activemq.hooks.SpringContextHook.run(SpringContextHook.java:30)
+	at org.apache.activemq.broker.BrokerService.stop(BrokerService.java:809)
+	at org.apache.activemq.xbean.XBeanBrokerService.stop(XBeanBrokerService.java:122)
+	at org.apache.activemq.broker.BrokerService.start(BrokerService.java:601)
+	at org.apache.activemq.xbean.XBeanBrokerService.afterPropertiesSet(XBeanBrokerService.java:73)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1579)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:296)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:293)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:628)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:64)
+	at org.apache.xbean.spring.context.ResourceXmlApplicationContext.<init>(ResourceXmlApplicationContext.java:52)
+	at org.apache.activemq.xbean.XBeanBrokerFactory$1.<init>(XBeanBrokerFactory.java:104)
+	at org.apache.activemq.xbean.XBeanBrokerFactory.createApplicationContext(XBeanBrokerFactory.java:104)
+	at org.apache.activemq.xbean.XBeanBrokerFactory.createBroker(XBeanBrokerFactory.java:67)
+	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:71)
+	at org.apache.activemq.broker.BrokerFactory.createBroker(BrokerFactory.java:54)
+	at org.apache.activemq.console.command.StartCommand.runTask(StartCommand.java:87)
+	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:57)
+	at org.apache.activemq.console.command.ShellCommand.runTask(ShellCommand.java:150)
+	at org.apache.activemq.console.command.AbstractCommand.execute(AbstractCommand.java:57)
+	at org.apache.activemq.console.command.ShellCommand.main(ShellCommand.java:104)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.activemq.console.Main.runTaskClass(Main.java:262)
+	at org.apache.activemq.console.Main.main(Main.java:115)

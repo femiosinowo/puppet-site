@@ -1,0 +1,31 @@
+input {
+  beats {
+    port => 5044
+    type => "logs"
+    ssl => false
+    ssl_certificate => "<%= @server_certs %>"
+    ssl_key => "<%= @private_key %>"
+  }
+    
+}
+
+ 
+output {
+  
+  
+  rabbitmq {
+  	  exchange => "exchangelogstash"
+  	  exchange_type => "topic"
+  	  key => "logs.%{host}"
+  	  workers => 2
+  	  durable => true
+  	  persistent => true
+  	  user	=> "logstash"
+  	  password => "logstash"
+  	  host => ["<%= @rabbitmq_service %>"]
+  	  port	=> 5672
+  	  vhost => "/logstash"
+	}
+	stdout { codec => rubydebug }
+}
+ 

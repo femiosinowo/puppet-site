@@ -153,11 +153,11 @@ class profiles::ds::ssl_certs (
   exec { $ssl_folder:
     command => "mkdir -p ${ssl_folder} ; mkdir -p ${ssl_folder}/private ; mkdir -p ${ssl_folder}/cacerts ",
     before  => File[$root_ca],
-  }
-
+  } ~>
   exec { "create some bull shit":
-    command => "touch  ${index_file} ;  echo 1000 > ${serial_file} ; touch ${index_file_attr} ; mkdir -p ${newcerts}",
-    before  => File[$root_ca],
+    command     => "touch  ${index_file} ;  echo head -200 /dev/urandom | cksum | cut -f1 -d '' > ${serial_file} ; touch ${index_file_attr} ; mkdir -p ${newcerts}",
+    before      => File[$root_ca],
+    refreshonly => true,
   }
 
   #  ensure_resource('file', $directory, {

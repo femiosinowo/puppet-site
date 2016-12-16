@@ -1,7 +1,7 @@
 define profiles::defines::reverse_proxy ($service_name = '', $port = '') {
   include ::haproxy
 
-  selinux::boolean { 'haproxy_connect_any': } # setsebool -P haproxy_connect_any 1
+  #selinux::boolean { 'haproxy_connect_any': } # setsebool -P haproxy_connect_any 1
 
 
 

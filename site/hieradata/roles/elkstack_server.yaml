@@ -11,6 +11,7 @@ sensu::subscriptions:
 consul::services:
   elasticsearch:
     port: 9200
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - elasticsearch
     checks:
@@ -22,6 +23,7 @@ consul::services:
        timeout: '1s'
   kibana:
     port: 5601
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - kibana
     checks:
@@ -33,6 +35,7 @@ consul::services:
        timeout: '1s'
   logstash:
     port: 5044
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - logstash
     checks:

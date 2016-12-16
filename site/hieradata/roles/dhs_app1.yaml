@@ -5,6 +5,7 @@ classes:
 consul::services:
   'dhs_app1_server':
     port: 8080
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - dhs_app1_server
     checks:

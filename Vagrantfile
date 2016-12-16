@@ -31,7 +31,7 @@ servers = YAML.load_file('servers.yaml')
 			config.vm.define servers["hostname"] do |srv|
 			  srv.vm.box = servers["box"]
 			  srv.vm.network "private_network", ip: servers["ip"]
-
+			  srv.vm.provision :hosts, :sync_hosts => true
 			  srv.vm.hostname =  servers["hostname"] + ".paosin.local"
 			  srv.vm.provider :virtualbox do |vb|
 				vb.name = servers["hostname"]
@@ -50,7 +50,7 @@ servers = YAML.load_file('servers.yaml')
 			  serverrole =  servers["server_role"]
 			  
 			  config.vm.provision :shell, :path => "provision/bootstrap.sh", :args => serverrole
-		 
+		 	  
 			  
 				config.trigger.before :destroy do
 				  info "Removing " + machine + " certs from puppet "
@@ -73,7 +73,7 @@ servers = YAML.load_file('servers.yaml')
 		  end
   
 		  config.vm.provision "shell", keep_color:true , inline: <<-SHELL
-			 yum update -y
+			 #yum update -y
 				#ssh-copy-id -i .ssh/id.pub -p 2200 vagrant@127.0.0.1 
 				#sudo echo 'server_role:"+ server_role +"' > /opt/puppetlabs/puppet/cache/facts.d/server_role.yaml
 				SHELL

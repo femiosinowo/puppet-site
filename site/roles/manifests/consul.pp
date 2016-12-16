@@ -6,6 +6,6 @@ class roles::consul () {
 
   include profiles::monitor::consul
 
-  class { '::profiles::serverspec': stage => testing, }
+ 
 
 }

@@ -16,6 +16,7 @@ sensu::checks:
 consul::services:
   'docker_swarm_node':
     port: 2375
+    token: "%{hiera('consul::service_write_token')}"
     tags:
       - docker_swarm_manager
     checks:

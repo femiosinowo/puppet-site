@@ -8,7 +8,7 @@ class profiles::logs::kibana (
     service_ensure => 'running',
     service_enable => true,
     config         => {
-      'elasticsearch.url'  => "https://${::fqdn}:9200",
+      'elasticsearch.url'  => "http://${::fqdn}:9200",
       'ca'                 => $ca_bundle,
       'kibana_elasticsearch_username' => 'kibana4-user',
       'kibana_elasticsearch_password' => 'kibana4-password',
@@ -22,7 +22,7 @@ class profiles::logs::kibana (
       'default_app_id'     => 'discover',
       'response_timeout'   => 300000,
       'shard_timeout'      => 0,
-      'verify_ssl'         => true,
+      'verify_ssl'         => false,
       'bundled_plugin_ids' => [
         'plugins/dashboard/index',
         'plugins/discover/index',

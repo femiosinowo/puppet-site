@@ -6,7 +6,7 @@
   server_role: puppet_server
 - hostname: consul
   box: rhel.7.base
-  ram: 1024
+  ram: 512
   ip: 172.17.8.102
   server_role: consul_server
 - hostname: elk
@@ -16,7 +16,7 @@
   server_role: elkstack_server
 - hostname: rabbitmq-0
   box: rhel.7.base
-  ram: 512
+  ram: 1024
   ip: 172.17.8.104
   server_role: rabbitmq_server
 - hostname: rabbitmq-1
@@ -34,3 +34,38 @@
   ram: 512
   ip: 172.17.8.106
   server_role: activemq_server
+- hostname: appserver
+  box: rhel.7.base
+  ram: 1024
+  ip: 172.17.8.110
+  server_role: appserver
+- hostname: db-0
+  box: rhel.7.base
+  ram: 1024
+  ip: 172.17.8.111
+  server_role: db_server
+- hostname: db-2
+  box: rhel.7.base
+  ram: 1024
+  ip: 172.17.8.112
+  server_role: db_server
+- hostname: tomcat
+  box: rhel.7.base
+  ram: 1024
+  ip: 172.17.8.113
+  server_role: tomcat_server
+- hostname: repo
+  box: rhel.7.base
+  ram: 512
+  ip: 172.17.8.115
+  server_role: repo_server
+- hostname: plex
+  box: rhel.7.base
+  ram: 1024
+  ip: 172.17.8.116
+  server_role: plex_server
+- hostname: puppetdb
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.116
+  server_role: puppet_db

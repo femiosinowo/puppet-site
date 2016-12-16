@@ -5,13 +5,24 @@ classes:
 consul::server: false
 consul::services:
   'rabbitmq':
+    token: "%{hiera('consul::service_write_token')}"
     port: 5672
     tags:
       - rabbitmq
     checks:
      - id: "%{::hostname}-healthcheck"
-       name: "Healthcheck for service %{::server_role} in %{::environment}"
-       service_id: "%{::environment}-%{::server_role}"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
        tcp: "localhost:5672"
        interval: '10s'
        timeout: '1s'
+       
+yum::repos:
+  erlang-repo:
+    descr: 'Erlang Solutions'
+    baseurl: 'https://packages.erlang-solutions.com/rpm/centos/$releasever/$basearch'
+    gpgcheck: 1
+    gpgkey: 'https://packages.erlang-solutions.com/rpm/erlang_solutions.asc'
+  local_repo:
+    descr: 'PaOsin.local repo - x86_64'
+    baseurl: 'http://172.17.8.115/'
