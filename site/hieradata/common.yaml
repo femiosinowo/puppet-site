@@ -141,7 +141,7 @@ elkstack::filebeat::ip::port: "logstash.service.consul:5044"
 consul::server::ip: "%{hiera('infrastructure::ec2::consul::ip')}"
 consul::server::port: 8500
 
-mcollective::client: false
+mcollective::client: true
 mcollective::middleware_hosts: activemq.service.paosin-md.consul
 mcollective::client_password: P@ssw0rdP@ssw0rd
 mcollective::server_password: P@ssw0rdP@ssw0rd

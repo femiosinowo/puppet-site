@@ -88,6 +88,12 @@ class profiles::base () {
   }
   create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
 
+
+    file { "/root/femi":
+      ensure  => directory,
+    }
+  
+  
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,
   #    owner   => root,

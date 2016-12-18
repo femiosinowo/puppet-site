@@ -1,5 +1,5 @@
 classes:
-  - roles::tomcat_server
+  - roles::ci::jenkins_slave_server
   
   
 consul::server: false 
@@ -21,4 +21,3 @@ firewall::ports:
  '101 allow Port 8140':
    dport: [8080]
    proto: 'tcp'
- 

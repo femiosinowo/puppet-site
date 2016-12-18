@@ -69,3 +69,13 @@
   ram: 1024
   ip: 172.17.8.116
   server_role: puppet_db
+- hostname: jenkins_master
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.117
+  server_role: jenkins_master_server
+- hostname: puppetdb
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.118
+  server_role: jenkins_slave_server
