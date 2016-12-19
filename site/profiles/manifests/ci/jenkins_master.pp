@@ -1,4 +1,5 @@
-class profiles::jenkins_master () {
+class profiles::ci::jenkins_master () {
+  include jenkins
   include jenkins::master
 
 }
