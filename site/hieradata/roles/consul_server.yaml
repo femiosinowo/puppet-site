@@ -45,7 +45,9 @@ consul::config_hash:
   acl_master_token: "%{hiera('consul::srv_acl_token_master')}"
   acl_default_policy: "%{hiera('consul::srv_acl_default_policy')}"
   acl_down_policy: "%{hiera('consul::srv_acl_down_policy')}"
-  #domain: 'consul'
+  recursors:
+   - 10.10.10.11
+   - 8.8.8.8
   data_dir:  '/opt/consul'
   bind_addr: "%{::ipaddress_eth1}"
   node_name: "%{::fqdn}"

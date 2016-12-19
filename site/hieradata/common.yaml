@@ -97,6 +97,9 @@ consul::config_hash:
   acl_token: "%{hiera('consul::service_read_token')}"
   #domain: 'consul'
   node_name: "%{::hostname}"
+  recursors:
+   - 10.10.10.11
+   - 8.8.8.8
   bind_addr: "%{::ipaddress_eth1}"
   advertise_addr: "%{::ipaddress_eth1}"
   ca_file: "/apps/ssl/cacerts/intermediate.cert.pem"
@@ -106,6 +109,7 @@ consul::config_hash:
   verify_outgoing: false
   ports:
     https: 8543
+    dns: 53
   data_dir: '/opt/consul'
   retry_join: 
     - "%{hiera('infrastructure::ec2::consul::ip')}"
