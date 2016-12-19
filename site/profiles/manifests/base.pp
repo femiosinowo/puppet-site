@@ -56,7 +56,7 @@ class profiles::base () {
   }
 
   class { 'resolv_conf':
-    nameservers => ['127.0.0.1', '8.8.8.8'],
+    nameservers => ['127.0.0.1', '10.10.10.11', '8.8.8.8'],
     searchpath  => ['node.consul', 'paosin.local', $::domain],
     stage       => 'dns',
   }
