@@ -3,7 +3,7 @@ classes:
  - profiles::stages
  - profiles::logs::filebeat
  - profiles::firewall
- - mcollective
+# - mcollective
 # - mcollective::server
 # - sensu
 # - profiles::monitor::sensu_plugins

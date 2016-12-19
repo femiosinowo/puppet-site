@@ -81,7 +81,7 @@ class profiles::base () {
   # mcollective::plugin { 'apt': source => 'puppet:///modules/site_mcollective/plugins/apt', }
 
 
-  create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
+  #create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
 
   $firewall_defaults = {
     action => 'accept',
