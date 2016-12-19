@@ -56,8 +56,8 @@ class profiles::base () {
   }
 
   class { 'resolv_conf':
-    nameservers => ['127.0.0.1', '10.10.10.11', '8.8.8.8'],
-    searchpath  => ['node.consul', 'paosin.local', $::domain],
+    nameservers => ['10.10.10.11', '127.0.0.1', '8.8.8.8'],
+    searchpath  => ['paosin.local', 'node.consul'],
     stage       => 'dns',
   }
 
@@ -81,19 +81,15 @@ class profiles::base () {
   # mcollective::plugin { 'apt': source => 'puppet:///modules/site_mcollective/plugins/apt', }
 
 
-  #create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
+  # create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
 
   $firewall_defaults = {
     action => 'accept',
   }
   create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
 
+  file { "/root/femi": ensure => directory, }
 
-    file { "/root/femi":
-      ensure  => directory,
-    }
-  
-  
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,
   #    owner   => root,
