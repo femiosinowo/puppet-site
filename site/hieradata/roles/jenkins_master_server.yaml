@@ -1,6 +1,8 @@
 classes:
   - roles::ci::jenkins_master_server
   
+jenkins::jenkins_ui_username: admin
+jenkins::jenkins_ui_password: admin
   
 consul::server: false 
 consul::services:
