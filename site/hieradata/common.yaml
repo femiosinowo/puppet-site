@@ -109,7 +109,6 @@ consul::config_hash:
   verify_outgoing: false
   ports:
     https: 8543
-    dns: 53
   data_dir: '/opt/consul'
   retry_join: 
     - "%{hiera('infrastructure::ec2::consul::ip')}"

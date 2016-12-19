@@ -52,7 +52,8 @@ class profiles::base () {
 
   dnsmasq::conf { 'consul':
     ensure  => present,
-    content => 'server=/consul/127.0.0.1#8600',
+    #content => 'server=/consul/127.0.0.1#8600',
+    source => "puppet:///modules/profiles/dns/dnsmasq.conf"
   }
 
   class { 'resolv_conf':
