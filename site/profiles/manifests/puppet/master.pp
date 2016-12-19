@@ -9,7 +9,7 @@ class profiles::puppet::master {
   class { 'hiera':
     hierarchy => [
       "%{environment}/%{calling_class}",
-      "%{environment}",
+      "env/%{environment}",
       "%{clientcert}",
       "%{fqdn}",
       "nodes/%{::clientcert}",

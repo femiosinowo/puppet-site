@@ -1,0 +1,5 @@
+infrastructure::ec2::consul::ip: '172.17.8.102'
+infrastructure::ec2::elkstack::ip: '172.17.8.103'
+infrastructure::ec2::rabbitmq::ip: '172.17.8.104'
+infrastructure::ec2::sensu::ip: '172.17.8.105'
+infrastructure::ec2::activemq::ip: '172.17.8.106'
