@@ -1,6 +1,6 @@
 ---
 - hostname: puppet
-  box:  puppet-server
+  box:  puppet_server
   ram: 3072
   ip: 172.17.8.101
   server_role: puppet_server
