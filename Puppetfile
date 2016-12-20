@@ -29,7 +29,7 @@ mod 'puppetlabs/java',
 mod 'darin/zypprepo',
 	:git => 'https://github.com/deadpoint/puppet-zypprepo.git'
 
-mod 'WhatsARanjit-plexmediaserver', '2.2.0'
+mod 'WhatsARanjit-plexmediaserver'
 
 mod 'nanliu/staging',
 	:git => 'https://github.com/nanliu/puppet-staging.git',
@@ -237,9 +237,9 @@ mod 'gdhbashton/consul_template',
 
 
 #mcollective
-#mod 'camptocamp-mcollective', '3.1.3'
-#mod 'jorhett-mcollective', '1.0.3'
-mod 'puppet-mcollective', '2.3.0'
+#mod 'camptocamp-mcollective'
+#mod 'jorhett-mcollective'
+mod 'puppet-mcollective'
 mod 'puppetlabs/java_ks'
 
 #activemq
