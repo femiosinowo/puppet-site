@@ -7,9 +7,11 @@ mod 'puppetlabs/stdlib',
 	:ref => '4.12.0'
 mod 'puppetlabs/concat',
 	:git => 'https://github.com/puppetlabs/puppetlabs-concat.git',
-	:ref => '2.2.0'
+	:ref => '2.2.0'	
 
-mod 'rtyler-jenkins', '1.7.0'
+mod 'rtyler/jenkins',
+	:git => 'https://github.com/jenkinsci/puppet-jenkins.git',
+	:ref => 'v1.7.0'
 	
 mod 'saz/dnsmasq'
 mod 'saz/resolv_conf'
@@ -214,7 +216,7 @@ mod 'maestrodev/wget',
 	:ref => 'v1.7.3'
 
  
-mod 'richardc-datacat', '0.6.2'
+mod 'richardc-datacat'
 
 mod 'willdurand/nodejs'
 
@@ -241,7 +243,7 @@ mod 'puppet-mcollective', '2.3.0'
 mod 'puppetlabs/java_ks'
 
 #activemq
-mod 'maestrodev-activemq', '2.0.3'
+mod 'maestrodev-activemq'
 
 
 #dockerswarm
@@ -255,11 +257,11 @@ mod 'adrien/alternatives',
 	:ref => 'v1.0.1'
 	
 
-mod 'puppetlabs-postgresql', '4.8.0' 
+mod 'puppetlabs-postgresql'
  
 mod 'puppet/extlib',
 	:git => 'https://github.com/voxpupuli/puppet-extlib.git',
 	:ref => 'v1.0.0'
 
-mod 'puppetlabs-puppetdb', '5.1.2'
-mod 'puppetlabs-firewall', '1.8.1'
+mod 'puppetlabs-puppetdb' 
+mod 'puppetlabs-firewall'
