@@ -19,7 +19,7 @@ class profiles::puppet::master {
       "%{fqdn}",
       "common",
       ],
-    datadir   => '/etc/puppetlabs/code/environments/production/site/hieradata',
+    datadir   => "/etc/puppetlabs/code/environments/%{::environment}/site/hieradata",
   # datadir   => '"${::settings::confdir}/code/environments/%{::environment}/site/hieradata"',
   }
 
