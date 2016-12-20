@@ -217,7 +217,8 @@ mod 'maestrodev/wget',
 	:ref => 'v1.7.3'
 
  
-mod 'richardc-datacat', '0.6.2'
+mod 'richardc-datacat'
+
 mod 'willdurand/nodejs'
 
 #nginx
