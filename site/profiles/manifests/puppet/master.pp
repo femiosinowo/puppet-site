@@ -32,11 +32,10 @@ class profiles::puppet::master {
   class { 'puppetdb::master::config':
   }
 
-
-#   class { '::mcollective':
-#    client            => true,
-#    middleware_hosts => [ 'activemq.service.paosin-md.consul' ],
-#  }
+  #   class { '::mcollective':
+  #    client            => true,
+  #    middleware_hosts => [ 'activemq.service.paosin-md.consul' ],
+  #  }
   #  /etc/puppetlabs/code/environments/production/
   #  file { "${::settings::confdir}/code/environments/production/manifests/site.pp":
   #    ensure => file,
