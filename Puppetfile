@@ -30,7 +30,7 @@ mod 'darin/zypprepo',
 	:git => 'https://github.com/deadpoint/puppet-zypprepo.git',
 	:ref => '1.0.2'
 
-mod 'WhatsARanjit-plexmediaserver'
+#mod 'WhatsARanjit-plexmediaserver'
 
 mod 'nanliu/staging',
 	:git => 'https://github.com/nanliu/puppet-staging.git',
