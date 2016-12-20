@@ -245,7 +245,7 @@ mod 'puppet/mcollective', '2.3.0'
 mod 'puppetlabs/java_ks'
 
 #activemq
-mod 'maestrodev-activemq'
+mod 'maestrodev/activemq'
 
 
 #dockerswarm
@@ -259,11 +259,11 @@ mod 'adrien/alternatives',
 	:ref => 'v1.0.1'
 	
 
-mod 'puppetlabs-postgresql'
+mod 'puppetlabs/postgresql'
  
 mod 'puppet/extlib',
 	:git => 'https://github.com/voxpupuli/puppet-extlib.git',
 	:ref => 'v1.0.0'
 
-mod 'puppetlabs-puppetdb' 
-mod 'puppetlabs-firewall'
+mod 'puppetlabs/puppetdb' 
+mod 'puppetlabs/firewall'
