@@ -156,6 +156,9 @@ mod 'garethr/erlang',
 
 mod 'panaman/pathmunge'
 
+mod 'richardc-datacat'
+
+mod 'willdurand/nodejs'
 
 #wordpress
 mod 'hunner/wordpress',
@@ -217,9 +220,7 @@ mod 'maestrodev/wget',
 	:ref => 'v1.7.3'
 
  
-mod 'richardc-datacat'
 
-mod 'willdurand/nodejs'
 
 #nginx
 mod 'jfryman/nginx',
