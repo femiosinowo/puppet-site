@@ -156,8 +156,7 @@ mod 'garethr/erlang',
 
 mod 'panaman/pathmunge'
 
-mod 'richardc-datacat',
-	:git => 'https://github.com/richardc/puppet-datacat.git'
+mod 'richardc/datacat'
 	
 mod 'willdurand/nodejs'
 
@@ -242,7 +241,7 @@ mod 'gdhbashton/consul_template',
 #mcollective
 #mod 'camptocamp-mcollective'
 #mod 'jorhett-mcollective'
-mod 'puppet-mcollective'
+mod 'puppet/mcollective', '2.3.0'
 mod 'puppetlabs/java_ks'
 
 #activemq
