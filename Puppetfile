@@ -7,7 +7,8 @@ mod 'puppetlabs/stdlib',
 	:ref => '4.12.0'
 mod 'puppetlabs/concat',
 	:git => 'https://github.com/puppetlabs/puppetlabs-concat.git',
-	:ref => '2.2.0'	
+	:ref => '2.2.0'
+
 mod 'rtyler-jenkins', '1.7.0'
 	
 mod 'saz/dnsmasq'

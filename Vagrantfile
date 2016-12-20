@@ -32,7 +32,7 @@ servers = YAML.load_file('servers.yaml')
 			  machine = servers["hostname"] + ".paosin.local"
 			  
 			  if  servers["hostname"] == "puppet"
-			    config.vm.synced_folder ".", "/etc/puppetlabs/code/environments/production/",
+			    config.vm.synced_folder ".", "/etc/puppetlabs/code/environments/dev/",
 					:owner => "root",
 					:group => "root",
 					:mount_options  => ['dmode=755,fmode=755']
