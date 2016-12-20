@@ -156,8 +156,9 @@ mod 'garethr/erlang',
 
 mod 'panaman/pathmunge'
 
-mod 'richardc-datacat'
-
+mod 'richardc-datacat',
+	:git => 'https://github.com/richardc/puppet-datacat.git'
+	
 mod 'willdurand/nodejs'
 
 #wordpress
