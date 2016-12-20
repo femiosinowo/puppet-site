@@ -27,7 +27,8 @@ mod 'puppetlabs/java',
 	:ref => '1.6.0'
 	
 mod 'darin/zypprepo',
-	:git => 'https://github.com/deadpoint/puppet-zypprepo.git'
+	:git => 'https://github.com/deadpoint/puppet-zypprepo.git',
+	:ref => '1.0.2'
 
 mod 'WhatsARanjit-plexmediaserver'
 
