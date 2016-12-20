@@ -264,4 +264,5 @@ mod 'puppet/extlib',
 	:ref => 'v1.0.0'
 
 mod 'puppetlabs/puppetdb' 
-mod 'puppetlabs/firewall'
+#mod 'puppetlabs/firewall'
+mod 'crayfishx/firewalld', '3.1.8'
