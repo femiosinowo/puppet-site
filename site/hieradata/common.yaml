@@ -112,11 +112,17 @@ consul::config_hash:
   data_dir: '/opt/consul'
   retry_join: 
     - "%{hiera('infrastructure::ec2::consul::ip')}"
-    
-firewall::ports:
- '100 allow SSH 22':
-   dport: 22
-   proto: 'tcp'
+
+firewalld::services:
+  'Allow SSH from the external zone':
+    ensure: present
+    service: ssh
+    zone: external
+        
+#firewall::ports:
+# '100 allow SSH 22':
+#   dport: 22
+#   proto: 'tcp'
    
 #yum::repos:
 #  local_repo:
