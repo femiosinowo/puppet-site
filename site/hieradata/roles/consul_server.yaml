@@ -114,4 +114,4 @@ firewalld::ports:
     ensure: present
     zone: public
     port: 8600
-    protocol: 'tcp' 
+    protocol: 'udp' 
