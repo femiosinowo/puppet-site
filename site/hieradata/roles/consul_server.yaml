@@ -76,10 +76,42 @@ consul::services:
        interval: '10s'
        timeout: '1s'
 
-firewall::ports:
- '101 allow TCP ports':
-   dport: [8300,8301,8302,8500,8543,8600]
-   proto: 'tcp'
- '102 allow UDP ports':
-   dport: 8600
-   proto: 'udp'
+#firewall::ports:
+# '101 allow TCP ports':
+#  dport: [8300,8301,8302,8500,8543,8600]
+#  proto: 'tcp'
+#'102 allow UDP ports':
+# dport: 8600
+# proto: 'udp'
+   
+firewalld::ports:
+  'Open port 8300 in the public zone':
+    ensure: present
+    zone: public
+    port: 8300
+    protocol: 'tcp'    
+  'Open port 8301 in the public zone':
+    ensure: present
+    zone: public
+    port: 8301
+    protocol: 'tcp'
+  'Open port 8302 in the public zone':
+    ensure: present
+    zone: public
+    port: 8302
+    protocol: 'tcp'    
+  'Open port 8500 in the public zone':
+    ensure: present
+    zone: public
+    port: 8500
+    protocol: 'tcp'
+  'Open port 8543 in the public zone':
+    ensure: present
+    zone: public
+    port: 8543
+    protocol: 'tcp'    
+  'Open port 8600 in the public zone':
+    ensure: present
+    zone: public
+    port: 8600
+    protocol: 'udp' 

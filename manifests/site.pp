@@ -5,7 +5,7 @@ node default {
 
 }
 
-node 'puppet.paosin.local' {
-  include roles::puppetmaster 
-}
+#node 'puppet.paosin.local' {
+#  include roles::puppetmaster 
+#}
  

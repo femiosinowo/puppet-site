@@ -15,16 +15,7 @@ servers = YAML.load_file('servers.yaml')
 		# Create boxes
 		Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-			#config.vm.synced_folder "../puppet-site", "/etc/puppetlabs/code/environments/production/"
-
-
-			#config.ssh.private_key_path = ".ssh/id"
-			#config.ssh.forward_agent = true
-
-
-			#config.ssh.username = 'root'
-			#config.ssh.password = 'vagrant'
-			config.ssh.insert_key = 'false'
+		config.ssh.insert_key = 'false'
 
 		  # Iterate through entries in YAML file
 		  servers.each do |servers|
@@ -41,7 +32,7 @@ servers = YAML.load_file('servers.yaml')
 			  machine = servers["hostname"] + ".paosin.local"
 			  
 			  if  servers["hostname"] == "puppet"
-			    config.vm.synced_folder ".", "/etc/puppetlabs/code/environments/production/",
+			    config.vm.synced_folder ".", "/etc/puppetlabs/code/environments/dev/",
 					:owner => "root",
 					:group => "root",
 					:mount_options  => ['dmode=755,fmode=755']

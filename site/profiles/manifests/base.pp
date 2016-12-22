@@ -51,8 +51,8 @@ class profiles::base () {
   include dnsmasq
 
   dnsmasq::conf { 'consul':
-    ensure  => present,
-    #content => 'server=/consul/127.0.0.1#8600',
+    ensure => present,
+    # content => 'server=/consul/127.0.0.1#8600',
     source => "puppet:///modules/profiles/dns/dnsmasq.conf"
   }
 
@@ -63,6 +63,7 @@ class profiles::base () {
   }
 
   Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] # -> Class['::consul']
+
 
 
   #  mcollective::plugin { 'puppet': }
@@ -84,12 +85,12 @@ class profiles::base () {
 
   # create_resources('mcollective::plugin', hiera_hash('mcollective::plugins'))
 
-  $firewall_defaults = {
-    action => 'accept',
-  }
-  create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
+  #  $firewall_defaults = {
+  #    action => 'accept',
+  #  }
+  #  create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
 
-  file { "/root/femi": ensure => directory, }
+  #file { "/root/femi": ensure => directory, }
 
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,

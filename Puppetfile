@@ -8,7 +8,10 @@ mod 'puppetlabs/stdlib',
 mod 'puppetlabs/concat',
 	:git => 'https://github.com/puppetlabs/puppetlabs-concat.git',
 	:ref => '2.2.0'	
-mod 'rtyler-jenkins', '1.7.0'
+
+mod 'rtyler/jenkins',
+	:git => 'https://github.com/jenkinsci/puppet-jenkins.git',
+	:ref => 'v1.7.0'
 	
 mod 'saz/dnsmasq'
 mod 'saz/resolv_conf'
@@ -23,10 +26,9 @@ mod 'puppetlabs/java',
 	:git => 'https://github.com/puppetlabs/puppetlabs-java.git',
 	:ref => '1.6.0'
 	
-mod 'darin/zypprepo',
-	:git => 'https://github.com/deadpoint/puppet-zypprepo.git'
+mod 'darin/zypprepo'
 
-mod 'WhatsARanjit-plexmediaserver', '2.2.0'
+mod 'WhatsARanjit/plexmediaserver'
 
 mod 'nanliu/staging',
 	:git => 'https://github.com/nanliu/puppet-staging.git',
@@ -152,6 +154,9 @@ mod 'garethr/erlang',
 
 mod 'panaman/pathmunge'
 
+mod 'richardc/datacat'
+	
+mod 'willdurand/nodejs'
 
 #wordpress
 mod 'hunner/wordpress',
@@ -213,9 +218,7 @@ mod 'maestrodev/wget',
 	:ref => 'v1.7.3'
 
  
-mod 'richardc-datacat', '0.6.2'
 
-mod 'willdurand/nodejs'
 
 #nginx
 mod 'jfryman/nginx',
@@ -234,13 +237,13 @@ mod 'gdhbashton/consul_template',
 
 
 #mcollective
-#mod 'camptocamp-mcollective', '3.1.3'
-#mod 'jorhett-mcollective', '1.0.3'
-mod 'puppet-mcollective', '2.3.0'
+#mod 'camptocamp-mcollective'
+#mod 'jorhett-mcollective'
+mod 'puppet/mcollective', '2.3.0'
 mod 'puppetlabs/java_ks'
 
 #activemq
-mod 'maestrodev-activemq', '2.0.3'
+mod 'maestrodev/activemq'
 
 
 #dockerswarm
@@ -254,11 +257,12 @@ mod 'adrien/alternatives',
 	:ref => 'v1.0.1'
 	
 
-mod 'puppetlabs-postgresql', '4.8.0' 
+mod 'puppetlabs/postgresql'
  
 mod 'puppet/extlib',
 	:git => 'https://github.com/voxpupuli/puppet-extlib.git',
 	:ref => 'v1.0.0'
 
-mod 'puppetlabs-puppetdb', '5.1.2'
-mod 'puppetlabs-firewall', '1.8.1'
+mod 'puppetlabs/puppetdb' 
+#mod 'puppetlabs/firewall'
+mod 'crayfishx/firewalld', '3.1.8'

@@ -1,3 +1,6 @@
+
+repo::path: '/vagrant/local_repo'
+
 infrastructure::ec2::consul::ip: '10.10.10.17'
 infrastructure::ec2::activemq::ip: '10.10.10.18'
 infrastructure::ec2::elkstack::ip: '10.10.10.19'

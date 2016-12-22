@@ -79,3 +79,7 @@
   ram: 1024
   ip: 172.17.8.118
   server_role: jenkins_slave_server
+- hostname: plain
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.119
