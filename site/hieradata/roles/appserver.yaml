@@ -16,3 +16,15 @@ consul::services:
        tcp: "localhost:8080"
        interval: '10s'
        timeout: '1s'
+
+firewalld::ports:
+  'Open port 80 in the public zone':
+    ensure: present
+    zone: public
+    port: 80
+    protocol: 'tcp'
+  'Open port 8080 in the public zone':
+    ensure: present
+    zone: public
+    port: 8080
+    protocol: 'tcp'
