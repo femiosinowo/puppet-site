@@ -29,7 +29,25 @@ consul::services:
        interval: '10s'
        timeout: '1s'
              
-firewall::ports:
- '101 allow TCP ports':
-   dport: [61613,61616,8161]
-   proto: 'tcp'
+#firewall::ports:
+# '101 allow TCP ports':
+#   dport: [61613,61616,8161]
+#   proto: 'tcp'
+
+
+firewalld::ports:
+  'Open port 61613 in the public zone':
+    ensure: present
+    zone: public
+    port: 61613
+    protocol: 'tcp'
+  'Open port 61616 in the public zone':
+    ensure: present
+    zone: public
+    port: 61616
+    protocol: 'tcp'
+  'Open port 8161 in the public zone':
+    ensure: present
+    zone: public
+    port: 8161
+    protocol: 'tcp'
