@@ -23,10 +23,6 @@ class profiles::puppet::master {
   # datadir   => '"${::settings::confdir}/code/environments/%{::environment}/site/hieradata"',
   }
 
-  # Configure puppetdb and its underlying database
-  class { 'puppetdb':
-    listen_address => '0.0.0.0',
-  }
 
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config':
