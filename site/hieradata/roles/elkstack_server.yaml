@@ -6,7 +6,25 @@ sensu::subscriptions:
   - elk
   
 
-    
+sensu::checks:
+  'check-logstash':
+    command: '/opt/sensu/embedded/bin/handler-logstash'
+    subscribers: 'elk'
+  'check-es-node-status':
+    command: '/opt/sensu/embedded/bin/check-es-node-status.rb'
+    subscribers: 'elk'
+  'check-es-cluster-health':
+    command: '/opt/sensu/embedded/bin/check-es-cluster-health.rb'
+    subscribers: 'elk'    
+  'metrics-es-cluster':
+    command: '/opt/sensu/embedded/bin/metrics-es-cluster.rb'
+    subscribers: 'elk'
+  'check-uchiwa-health':
+    command: '/opt/sensu/embedded/bin/check-uchiwa-health.rb'
+    subscribers: 'elk'
+  'check-haproxy':
+    command: '/opt/sensu/embedded/bin/check-haproxy.rb -S localhost'
+    subscribers: 'elk'    
   
 consul::services:
   elasticsearch:

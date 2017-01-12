@@ -163,6 +163,7 @@ class profiles::messaging::rabbitmq (
     command     => 'systemctl restart  rabbitmq-server; /usr/sbin/rabbitmqctl stop_app ; /usr/sbin/rabbitmqctl start_app',
     refreshonly => true,
   }
+
   #  file { '/etc/rabbitmq/rabbitmq.config':
   #    content => template('profiles/messaging/rabbitmq/rabbitmq.config.erb'),
   #    ensure  => file,
@@ -171,4 +172,6 @@ class profiles::messaging::rabbitmq (
   #     notify   => Class['rabbitmq::service'],
   #  } ~>
   #
+
+ 
 }

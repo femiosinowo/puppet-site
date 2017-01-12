@@ -54,7 +54,7 @@ servers = YAML.load_file('servers.yaml')
 				config.vm.provision "puppet_server" do |puppet|
 					puppet.puppet_node = machine
 					puppet.puppet_server = "puppet.paosin.local"
-					puppet.options = "--verbose  --color=true "
+					puppet.options = "--verbose  --color=true  --environment=dev"
 				end
 		 
 			  

@@ -16,6 +16,10 @@ consul::services:
        tcp: "localhost:5672"
        interval: '10s'
        timeout: '1s'
+
+
+
+
        
 yum::repos:
   erlang-repo:
@@ -26,3 +30,15 @@ yum::repos:
   local_repo:
     descr: 'PaOsin.local repo - x86_64'
     baseurl: 'http://172.17.8.115/'
+    
+firewalld::ports:
+  'Open port 5672 in the public zone':
+    ensure: present
+    zone: public
+    port: 5672
+    protocol: 'tcp'    
+  'Open port 4567 in the public zone':
+    ensure: present
+    zone: public
+    port: 4567
+    protocol: 'tcp'

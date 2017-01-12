@@ -6,4 +6,47 @@ sensu::api: true
 sensu::redis_host: 127.0.0.1
 sensu::subscriptions:
   - base
- 
+
+consul::server: false
+consul::services:
+  'sensu-api':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 4567
+    tags:
+      - sensu_api
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:4567"
+       interval: '10s'
+       timeout: '1s'
+  'uchiwa':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 3000
+    tags:
+      - uchiwa
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:3000"
+       interval: '10s'
+       timeout: '1s'
+   
+firewalld::ports:
+  'Open port 3000 in the public zone':
+    ensure: present
+    zone: public
+    port: 3000
+    protocol: 'tcp'    
+  'Open port 8301 in the public zone':
+    ensure: present
+    zone: public
+    port: 8301
+    protocol: 'tcp'
+  'Open port 4567 in the public zone':
+    ensure: present
+    zone: public
+    port: 4567
+    protocol: 'tcp'
