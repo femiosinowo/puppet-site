@@ -126,10 +126,9 @@ mod 'adrien/filemapper',
 
  
 
-#sensu
-mod 'sensu/sensu',
-	:git => 'https://github.com/sensu/sensu-puppet.git',
-	:ref => '2.1.0'
+#sensu058
+mod 'sensu-sensu', '2.2.0'
+
 
 mod 'lwf/remote_file',
 	:git => 'https://github.com/lwf/puppet-remote_file.git',

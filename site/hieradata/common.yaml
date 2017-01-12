@@ -3,6 +3,8 @@ classes:
  - profiles::stages
  - profiles::logs::filebeat
  - profiles::firewall
+ - sensu
+ - profiles::monitor::sensu_plugins
 # - mcollective
 # - mcollective::server
 # - sensu
@@ -15,19 +17,19 @@ sensu::server: false
 sensu::install_repo: true
 sensu::purge:
   config: true
-sensu::rabbitmq_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::rabbitmq_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::rabbitmq_vhost: '/sensu'
 sensu::rabbitmq_password: sensu
 sensu::rabbitmq_port: 5672
 sensu::reconnect_on_error: true
 sensu::api: false
-sensu::api_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::api_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
  
 sensu::api_user: sensu
 sensu::api_password: sensu
 sensu::api_port: 4567
 sensu::client_address: "%{::ipaddress_eth1}"
-sensu::redis_host: "%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::redis_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::subscriptions:
   - base
   - ALL
@@ -51,25 +53,7 @@ sensu::checks:
     subscribers: 'all'
   'metrics-puppet-run':
     command: '/opt/sensu/embedded/bin/metrics-puppet-run.rb -p /var/lib/puppet/state/last_run_summary.yaml'
-    subscribers: 'all' 
-  'check-logstash':
-    command: '/opt/sensu/embedded/bin/handler-logstash'
-    subscribers: 'elk'
-  'check-es-node-status':
-    command: '/opt/sensu/embedded/bin/check-es-node-status.rb'
-    subscribers: 'elk'
-  'check-es-cluster-health':
-    command: '/opt/sensu/embedded/bin/check-es-cluster-health.rb'
-    subscribers: 'elk'    
-  'metrics-es-cluster':
-    command: '/opt/sensu/embedded/bin/metrics-es-cluster.rb'
-    subscribers: 'elk'
-  'check-uchiwa-health':
-    command: '/opt/sensu/embedded/bin/check-uchiwa-health.rb'
-    subscribers: 'elk'
-  'check-haproxy':
-    command: '/opt/sensu/embedded/bin/check-haproxy.rb -S localhost'
-    subscribers: 'elk'
+    subscribers: 'all'
      
 
 #certs details
@@ -118,6 +102,13 @@ firewalld::services:
     ensure: present
     service: ssh
     zone: external
+
+firewalld::ports:
+  'Open port 8301 in the public zone':
+    ensure: present
+    zone: public
+    port: 8301
+    protocol: 'tcp'    
         
 #firewall::ports:
 # '100 allow SSH 22':

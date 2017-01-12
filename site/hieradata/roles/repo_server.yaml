@@ -17,7 +17,14 @@ consul::services:
        interval: '10s'
        timeout: '1s'
        
-firewall::ports:
- '101 allow TCP ports':
-   dport: 80
-   proto: 'tcp'
+#firewall::ports:
+# '101 allow 80 ports':
+#   dport: 80
+#   proto: 'tcp'
+
+firewalld::ports:
+  'Open port 80 in the public zone':
+    ensure: present
+    zone: public
+    port: 80
+    protocol: 'tcp'  

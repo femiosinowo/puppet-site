@@ -7,5 +7,6 @@ class profiles::ci::jenkins_master (
   include jenkins
   include jenkins::master
 
-  jenkins::plugin { 'git': }
+  create_resources('jenkins::plugin', hiera_hash('jenkins::plugins'))
+  # jenkins::plugin { 'git': }
 }

@@ -1,7 +1,12 @@
 ---
+- hostname: pe-puppet
+  box:  centos/7
+  ram: 3072
+  ip: 172.17.8.100
+  server_role: puppet_server
 - hostname: puppet
   box:  puppet-server
-  ram: 3072
+  ram: 5072
   ip: 172.17.8.101
   server_role: puppet_server
 - hostname: consul
@@ -69,7 +74,7 @@
   ram: 1024
   ip: 172.17.8.116
   server_role: puppet_db
-- hostname: jenkins_master
+- hostname: jenkinsmaster
   box:  rhel.7.base
   ram: 1024
   ip: 172.17.8.117
