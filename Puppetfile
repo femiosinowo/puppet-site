@@ -256,8 +256,9 @@ mod 'adrien/alternatives',
 	:ref => 'v1.0.1'
 	
 
-mod 'puppetlabs/postgresql'
- 
+mod 'puppetlabs-postgresql', '4.8.0'
+mod 'it2ndq-barman', '2.0.0'
+
 mod 'puppet/extlib',
 	:git => 'https://github.com/voxpupuli/puppet-extlib.git',
 	:ref => 'v1.0.0'

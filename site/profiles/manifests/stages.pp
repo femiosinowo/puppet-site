@@ -7,6 +7,8 @@ class profiles::stages () {
 
   stage { 'pre': }
 
+  stage { 'post': }
+
   stage { 'testing': }
 
 }

@@ -1,5 +1,5 @@
 class profiles::firewall () {
-  class { 'firewalld': }
+ 
   #  resources { 'firewall': purge => true, }
   #
   #  Firewall {

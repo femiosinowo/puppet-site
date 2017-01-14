@@ -1,5 +1,5 @@
 classes:
-  - roles::db::postgresql
+  - roles::db::barman
 
   
 yum::repos:

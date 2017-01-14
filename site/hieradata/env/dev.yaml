@@ -8,3 +8,6 @@ infrastructure::ec2::rabbitmq::ip: '172.17.8.104'
 infrastructure::ec2::sensu::ip: '172.17.8.120'
 infrastructure::ec2::activemq::ip: '172.17.8.106'
 infrastructure::ec2::postgresql::ip: '172.17.8.121'
+infrastructure::ec2::barman::ip: 172.17.8.122
+
+puppet::conf::environment: dev

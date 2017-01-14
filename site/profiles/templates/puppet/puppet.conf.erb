@@ -1,0 +1,19 @@
+<% if @puppetmaster -%>
+[master]
+vardir = /opt/puppetlabs/server/data/puppetserver
+logdir = /var/log/puppetlabs/puppetserver
+rundir = /var/run/puppetlabs/puppetserver
+pidfile = /var/run/puppetlabs/puppetserver/puppetserver.pid
+codedir = /etc/puppetlabs/code
+storeconfigs = true
+storeconfigs_backend = puppetdb
+
+<% end -%>
+[main]
+<% if @puppetmaster -%>
+hiera_config = /etc/puppetlabs/puppet/hiera.yaml
+<% end -%>
+certname = <%= @certname %>
+server = <%= @puppetserver %>
+environment = <%= @environment %>
+runinterval = <%= @runinterval %>

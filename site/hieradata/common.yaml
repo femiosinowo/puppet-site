@@ -151,4 +151,11 @@ mcollective::plugins:
  puppet:
   source: 'puppet:///modules/profiles/mcollective/plugins/puppet'
 
+
+puppet::conf::puppetmaster: false
+puppet::conf::certname: "%{::fqdn}"
+puppet::conf::puppetserver: puppet
+puppet::conf::runinterval: 1h
+#puppet::conf::environment: dev
+
  

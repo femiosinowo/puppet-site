@@ -9,3 +9,5 @@ infrastructure::ec2::sensu::ip: '10.10.10.21'
 infrastructure::ec2::jenkins::ip: '10.10.10.22'
 infrastructure::ec2::repo::ip: '10.10.10.23'
 infrastructure::ec2::tomcat::ip: '10.10.10.24'
+
+puppet::conf::environment: production

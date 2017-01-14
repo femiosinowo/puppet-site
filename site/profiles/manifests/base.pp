@@ -1,4 +1,11 @@
-class profiles::base () {
+class profiles::base (
+  $certname     = $::fqdn, # hiera('puppet::conf::certname'),
+  #$environment  = hiera('puppet::conf::environment'),
+  $puppetserver = hiera('puppet::conf::puppetserver'),
+  $runinterval  = hiera('puppet::conf::runinterval'),
+  #
+  ) {
+  #
   include ssh
   include motd
   include stdlib
@@ -62,8 +69,10 @@ class profiles::base () {
     stage       => 'dns',
   }
 
+  class { 'firewalld':
+  # stage => 'post'
+  }
   Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] # -> Class['::consul']
-
 
 
   #  mcollective::plugin { 'puppet': }
@@ -90,7 +99,7 @@ class profiles::base () {
   #  }
   #  create_resources('firewall', hiera_hash('firewall::ports'), $firewall_defaults)
 
-  #file { "/root/femi": ensure => directory, }
+  # file { "/root/femi": ensure => directory, }
 
   #  file { "/etc/cron.d/puppet":
   #    ensure  => file,
@@ -102,6 +111,10 @@ class profiles::base () {
   #  # --no-splay\n"),
   #  }
 
+  file { '/etc/puppetlabs/puppet/puppet.conf':
+    ensure  => file,
+    content => template("profiles/puppet/puppet.conf.erb"),
+  } ->
   # common packages needed everywhere
   package { ['tree', 'sudo', 'screen']: ensure => present, }
 
@@ -125,5 +138,5 @@ class profiles::base () {
   # refreshonly => true,
   }
 
-  Stage['repo'] -> Stage['dns'] -> Stage['pre'] -> Stage['main'] -> Stage['testing']
+  Stage['repo'] -> Stage['dns'] -> Stage['pre'] -> Stage['main'] -> Stage['post'] -> Stage['testing']
 }

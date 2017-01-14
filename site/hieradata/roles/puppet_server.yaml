@@ -36,5 +36,6 @@ firewalld::ports:
 # '101 allow Port 8140':
 #   dport: [8080,8140]
 #   proto: 'tcp'
- 
+
+puppet::conf::puppetmaster: true
     

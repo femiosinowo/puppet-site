@@ -32,7 +32,7 @@
 - hostname: sensu
   box: rhel.7.base
   ram: 1024
-  ip: 172.17.8.105
+  ip: 172.17.8.120
   server_role: sensu_server
 - hostname: activemq
   box: rhel.7.base
@@ -88,3 +88,13 @@
   box:  rhel.7.base
   ram: 1024
   ip: 172.17.8.119
+- hostname: postgresql
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.121
+  server_role: postgresql_server
+- hostname: barman
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.122
+  server_role: barman_server
