@@ -6,7 +6,7 @@ class profiles::db::barman ($postgres_server_ip = hiera('infrastructure::ec2::po
     source      => 'https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm',
     destination => '/tmp/',
     timeout     => 0,
-    verbose     => false,
+    verbose     => true,
   } ->
   exec { 'rpm postgress':
     command => 'rpm -ivh /tmp/pgdg-centos96-9.6-3.noarch.rpm',
@@ -49,28 +49,28 @@ class profiles::db::barman ($postgres_server_ip = hiera('infrastructure::ec2::po
     source => "puppet:///modules/profiles/db/progresql_user_rsa_key"
   }
 
-#  file { "/etc/cron.d/barmanbackup":
-#    ensure  => file,
-#    owner   => 'barman',
-#    group   => 'barman',
-#    mode    => '0644',
-#    content => inline_template("30 23 * * * /usr/bin/barman backup main-db-server\n * * * * * /usr/bin/barman cron"),
-#  # content => inline_template("<%= scope.function_fqdn_rand([60]) %> * * * * root /usr/bin/puppet agent --onetime --no-daemonize
-#  # --no-splay\n"),
-#  }
+  #  file { "/etc/cron.d/barmanbackup":
+  #    ensure  => file,
+  #    owner   => 'barman',
+  #    group   => 'barman',
+  #    mode    => '0644',
+  #    content => inline_template("30 23 * * * /usr/bin/barman backup main-db-server\n * * * * * /usr/bin/barman cron"),
+  #  # content => inline_template("<%= scope.function_fqdn_rand([60]) %> * * * * root /usr/bin/puppet agent --onetime --no-daemonize
+  #  # --no-splay\n"),
+  #  }
 
   cron { 'barman-backup':
     command => '/usr/bin/barman backup main-db-server',
     user    => 'barman',
     hour    => 23,
     minute  => 30,
-  }
-
+    require => Package['barman'],
+  } ->
   cron { 'barman-cron':
     command => '/usr/bin/barman cron',
     user    => 'barman',
-    #hour    => 10,
-    #minute  => 0,
+  # hour    => 10,
+  # minute  => 0,
   }
   #  class { 'barman':
   #    manage_package_repo => true,

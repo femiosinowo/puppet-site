@@ -1,5 +1,5 @@
 class profiles::db::postgresql (
-  #
+  #http://pgfoundry.org/frs/download.php/527/world-1.0.tar.gz
   $barman_server_ip = hiera('infrastructure::ec2::barman::ip'),
 
   #
