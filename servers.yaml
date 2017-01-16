@@ -98,3 +98,13 @@
   ram: 1024
   ip: 172.17.8.122
   server_role: barman_server
+- hostname: postgresql2
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.123
+  server_role: postgresql_server
+- hostname: storage
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.124
+  server_role: storage_server

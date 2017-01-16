@@ -1,6 +1,6 @@
 class profiles::base (
   $certname     = $::fqdn, # hiera('puppet::conf::certname'),
-  #$environment  = hiera('puppet::conf::environment'),
+  # $environment  = hiera('puppet::conf::environment'),
   $puppetserver = hiera('puppet::conf::puppetserver'),
   $runinterval  = hiera('puppet::conf::runinterval'),
   #
@@ -68,8 +68,15 @@ class profiles::base (
     searchpath  => ['paosin.local', 'node.consul'],
     stage       => 'dns',
   }
-
+  exec { 'start firewalld service':
+    command => 'systemctl start firewalld',
+    path    => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
+    user    => 'root',
+  # stage   => 'dns',
+  # refreshonly => true,
+  } ->
   class { 'firewalld':
+    service_enable => true,
   # stage => 'post'
   }
   Class['::profiles::ds::ssl_certs'] -> Class['::resolv_conf'] # -> Class['::consul']

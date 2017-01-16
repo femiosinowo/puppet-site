@@ -1,5 +1,7 @@
 class profiles::db::postgresql (
-  #http://pgfoundry.org/frs/download.php/527/world-1.0.tar.gz
+  # http://pgfoundry.org/frs/download.php/527/world-1.0.tar.gz
+  #http://www.sportsdb.org/modules/sd/assets/downloads/sportsdb_sample_postgresql.zip
+  #create table huge_data_table as select s, md5(s::text) from generate_series(1,10) s;
   $barman_server_ip = hiera('infrastructure::ec2::barman::ip'),
 
   #
@@ -58,7 +60,27 @@ class profiles::db::postgresql (
     role      => 'marmot',
   }
 
-  #contain postgresql::server
+  # contain postgresql::server
+  # psql mydatabasename < infile
+  # psql -d mydatabasename
+  file { '/var/lib/pgsql/world.sql':
+    ensure => file,
+    owner  => 'postgres',
+    group  => 'postgres',
+    mode   => '0644',
+    source => "puppet:///modules/profiles/db/world.sql"
+  }
+  #  ->
+  #
+  #    exec { ' psql mydatabasename < world.sql':
+  #    command => ' psql mydatabasename < world.sql',
+  #    #onlyif  => "rpm -ivh /tmp/pgdg-centos96-9.6-3.noarch.rpm",
+  #    path    => '/usr/bin:/usr/sbin/:/bin:/sbin:/usr/local/bin:/usr/local/sbin',
+  #    user    => 'root',
+  #  # stage   => 'dns',
+  #  # refreshonly => true,
+  #  }
+  #
 
   file { '/var/lib/pgsql/.ssh/id_rsa':
     ensure  => file,

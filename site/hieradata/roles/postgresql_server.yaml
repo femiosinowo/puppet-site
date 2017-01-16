@@ -13,3 +13,18 @@ firewalld::ports:
     zone: public
     port: 5432
     protocol: 'tcp'
+    
+consul::server: false
+consul::services:
+  'postgresql':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 5432
+    tags:
+      - postgresql
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:5432"
+       interval: '10s'
+       timeout: '1s'
