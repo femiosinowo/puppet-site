@@ -1,7 +1,11 @@
 output {
-  elasticsearch {
-    hosts => "<%= @elasticsearch_host %>"
+ elasticsearch {
+    hosts => "<%= @elastic_search_url %>:9200"
+    index => "logstash-%{+YYYY.MM.dd}"
   }
+  
+ 
+  
   stdout {
     codec => rubydebug
   }

@@ -4,4 +4,18 @@ input {
     path => [ "/var/log/messages", "/var/log/syslog", "/var/log/*.log" ]
     sincedb_path => "/var/cache/logstash/syslog.sincedb"
   }
+  
+    rabbitmq {
+    #arguments => { "x-ha-policy" => "all" }
+    user => 'logstash'
+    password => 'logstash'
+    durable => true
+    exchange => 'exchangelogstash'
+    host => ["<%= @rabbitmq_service %>"]
+    key => 'logs-%{host}'
+    port => 5672
+    queue => 'queuelogstash'
+    vhost => '/logstash'
+  }
+  
 }

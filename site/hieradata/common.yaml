@@ -1,7 +1,7 @@
 classes:
  - profiles::base
  - profiles::stages
- - profiles::logs::filebeat
+ - profiles::logs::logstash
  - profiles::firewall
  - sensu
  - profiles::monitor::sensu_plugins
@@ -10,26 +10,34 @@ classes:
 # - sensu
 # - profiles::monitor::sensu_plugins
 
+consul::datacenter: paosin-local
 
-    
+logstash::input: 'profiles/logstash/agent/input.conf.erb'
+logstash::filter: 'profiles/logstash/agent/filter.conf.erb'
+logstash::output: 'profiles/logstash/agent/output.conf.erb'
+
+elasticsearch::url: "elasticsearch.service.%{hiera('consul::datacenter')}.consul"
+
+rabbitmq::host: "rabbitmq.service.%{hiera('consul::datacenter')}.consul"
+
 sensu::server_ip: "%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::server: false
 sensu::install_repo: true
 sensu::purge:
   config: true
-sensu::rabbitmq_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::rabbitmq_host: "rabbitmq.service.%{hiera('consul::datacenter')}.consul" #"%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::rabbitmq_vhost: '/sensu'
 sensu::rabbitmq_password: sensu
 sensu::rabbitmq_port: 5672
 sensu::reconnect_on_error: true
 sensu::api: false
-sensu::api_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::api_host: "rabbitmq.service.%{hiera('consul::datacenter')}.consul" #"%{hiera('infrastructure::ec2::sensu::ip')}"
  
 sensu::api_user: sensu
 sensu::api_password: sensu
 sensu::api_port: 4567
 sensu::client_address: "%{::ipaddress_eth1}"
-sensu::redis_host: 'rabbitmq.service.paosin-md.consul' #"%{hiera('infrastructure::ec2::sensu::ip')}"
+sensu::redis_host: "rabbitmq.service.%{hiera('consul::datacenter')}.consul" #"%{hiera('infrastructure::ec2::sensu::ip')}"
 sensu::subscriptions:
   - base
   - ALL
@@ -70,14 +78,14 @@ ca_bundle: "/apps/ssl/cacerts/ca_bundle.pem"
 consul::srv_acl_token_master: '535bb022-0318-41a5-a535-4b1142a78e3c'
 consul::srv_acl_default_policy: 'deny'
 consul::srv_acl_down_policy: 'deny'
-consul::srv_acl_datacenter: 'paosin-md'
+consul::srv_acl_datacenter: "%{hiera('consul::datacenter')}"
 
 consul::service_write_token: 'c36f9c3a-b1af-4fad-a58c-5533c7d2a7fe'
 consul::service_read_token: '35853dd9-f4b6-4193-bac5-5934d303f0c4'
 
 
 consul::config_hash:
-  datacenter: 'paosin-md'
+  datacenter: "%{hiera('consul::datacenter')}"
   acl_token: "%{hiera('consul::service_read_token')}"
   #domain: 'consul'
   node_name: "%{::hostname}"
@@ -135,7 +143,7 @@ consul::server::ip: "%{hiera('infrastructure::ec2::consul::ip')}"
 consul::server::port: 8500
 
 mcollective::client: true
-mcollective::middleware_hosts: activemq.service.paosin-md.consul
+mcollective::middleware_hosts: "activemq.service.%{hiera('consul::datacenter')}.consul"
 mcollective::client_password: P@ssw0rdP@ssw0rd
 mcollective::server_password: P@ssw0rdP@ssw0rd
 mcollective::psk_key: f525ae7c92fca724b06ed6701cf99ca255e992f9a057084ddbfb75c73dc9c4d9

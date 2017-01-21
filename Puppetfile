@@ -184,9 +184,7 @@ mod 'elasticsearch/elasticsearch',
 	:git => 'https://github.com/elastic/puppet-elasticsearch.git',
 	:ref => '0.13.1'
 
-mod 'elasticsearch/logstash',
-	:git => 'https://github.com/elastic/puppet-logstash.git',
-	:ref => '0.6.4'
+mod 'elasticsearch-logstash', '0.6.6'
 
 mod 'elasticsearch/logstashforwarder',
 	:git => 'https://github.com/elastic/puppet-logstashforwarder.git',

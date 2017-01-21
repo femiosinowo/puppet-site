@@ -1,6 +1,12 @@
 classes:
   - roles::server_elkstack
 
+
+logstash::input: 'profiles/logstash/server/centos-messages-input.erb'
+logstash::filter: 'profiles/logstash/server/centos-messages-filter.erb'
+logstash::output: 'profiles/logstash/server/centos-messages-output.erb'
+  
+  
 sensu::subscriptions:
   - all
   - elk
@@ -63,3 +69,20 @@ consul::services:
        tcp: "localhost:5044"
        interval: '10s'
        timeout: '1s'
+       
+firewalld::ports:
+  'Open port 5044 in the public zone':
+    ensure: present
+    zone: public
+    port: 5044
+    protocol: 'tcp'    
+  'Open port 5601 in the public zone':
+    ensure: present
+    zone: public
+    port: 5601
+    protocol: 'tcp'
+  'Open port 9200 in the public zone':
+    ensure: present
+    zone: public
+    port: 9200
+    protocol: 'tcp'

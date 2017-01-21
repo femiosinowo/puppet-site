@@ -108,3 +108,8 @@
   ram: 1024
   ip: 172.17.8.124
   server_role: storage_server
+- hostname: messaging
+  box:  rhel.7.base
+  ram: 1024
+  ip: 172.17.8.125
+  server_role: all_messaging_server

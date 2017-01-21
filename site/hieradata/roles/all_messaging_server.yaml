@@ -1,0 +1,100 @@
+classes:
+  - roles::messaging::activemq
+  - roles::messaging::rabbitmq
+  - roles::messaging::redis
+
+
+yum::repos:
+  erlang-repo:
+    descr: 'Erlang Solutions'
+    baseurl: 'https://packages.erlang-solutions.com/rpm/centos/$releasever/$basearch'
+    gpgcheck: 1
+    gpgkey: 'https://packages.erlang-solutions.com/rpm/erlang_solutions.asc'
+  local_repo:
+    descr: 'PaOsin.local repo - x86_64'
+    baseurl: 'http://172.17.8.115/'
+    
+      
+consul::server: false
+consul::services:
+  'activemq':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 61616
+    tags:
+      - activemq
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:61616"
+       interval: '10s'
+       timeout: '1s'
+  'activemq-stomp':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 61613
+    tags:
+      - activemqstomp
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:61613"
+       interval: '10s'
+       timeout: '1s'
+  'rabbitmq':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 5672
+    tags:
+      - rabbitmq
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:5672"
+       interval: '10s'
+       timeout: '1s'
+  'rabbitmq-admin-page':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 5672
+    tags:
+      - rabbitmq-admin-page1
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:5672"
+       interval: '10s'
+       timeout: '1s'
+
+firewalld::ports:
+  'Open port 61613 in the public zone':
+    ensure: present
+    zone: public
+    port: 61613
+    protocol: 'tcp'
+  'Open port 61616 in the public zone':
+    ensure: present
+    zone: public
+    port: 61616
+    protocol: 'tcp'
+  'Open port 8161 in the public zone':
+    ensure: present
+    zone: public
+    port: 8161
+    protocol: 'tcp'
+  'Open port 5672 in the public zone':
+    ensure: present
+    zone: public
+    port: 5672
+    protocol: 'tcp'    
+  'Open port 4567 in the public zone':
+    ensure: present
+    zone: public
+    port: 4567
+    protocol: 'tcp'
+  'Open port 15672 in the public zone':
+    ensure: present
+    zone: public
+    port: 15672
+    protocol: 'tcp'
+  

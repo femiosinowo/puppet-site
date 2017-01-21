@@ -1,6 +1,6 @@
 classes:
   - epel
-  - roles::rabbitmq
+  - roles::messaging::rabbitmq
   
 consul::server: false
 consul::services:
@@ -16,7 +16,18 @@ consul::services:
        tcp: "localhost:5672"
        interval: '10s'
        timeout: '1s'
-
+  'rabbitmq-admin-page':
+    token: "%{hiera('consul::service_write_token')}"
+    port: 5672
+    tags:
+      - rabbitmq-admin-page1
+    checks:
+     - id: "%{::hostname}-healthcheck"
+       name: "Healthcheck for service %{::hostname} in %{::environment}"
+       service_id: "%{::hostname}-%{::server_role}"
+       tcp: "localhost:5672"
+       interval: '10s'
+       timeout: '1s'
 
 
 
@@ -41,4 +52,9 @@ firewalld::ports:
     ensure: present
     zone: public
     port: 4567
+    protocol: 'tcp'
+  'Open port 15672 in the public zone':
+    ensure: present
+    zone: public
+    port: 15672
     protocol: 'tcp'

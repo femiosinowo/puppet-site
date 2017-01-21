@@ -18,7 +18,7 @@ class profiles::db::postgresql (
 
   # vim /var/lib/pgsql/9.6/data/pg_hba.conf
   postgresql::server::pg_hba_rule { 'Local access':
-    type        => 'local',
+    type        => 'local', 
     database    => 'all',
     user        => 'all',
     auth_method => 'peer',

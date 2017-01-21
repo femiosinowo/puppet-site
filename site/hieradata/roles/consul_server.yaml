@@ -40,7 +40,7 @@ consul::config_hash:
   bootstrap_expect: 1
   ui_dir: '/opt/consul/ui'
   client_addr: '0.0.0.0'
-  datacenter: 'paosin-md'
+  datacenter: "%{hiera('consul::datacenter')}"
   acl_datacenter: "%{hiera('consul::srv_acl_datacenter')}"
   acl_master_token: "%{hiera('consul::srv_acl_token_master')}"
   acl_default_policy: "%{hiera('consul::srv_acl_default_policy')}"
